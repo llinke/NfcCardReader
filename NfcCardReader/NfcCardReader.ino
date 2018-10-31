@@ -23,6 +23,8 @@ const int sdaPin = D2;
 const int I2C_BUS_SPEED = 100000; // 100kHz for PCF8574
 const int I2C_CLK_STRETCH_LIMIT = 1600;
 
+const int LOOP_DELAY = 3000;
+
 #endif
 
 void setup(void)
@@ -46,22 +48,78 @@ void setup(void)
 
 void loop(void)
 {
+  ScanNfcTag();
+
+  delay(LOOP_DELAY);
+}
+
+void ScanI2C()
+{
+  byte error, address;
+  int nDevices;
+
+  DEBUG_PRINTLN("I2C: scanning I2C Bus...");
+  nDevices = 0;
+  for (address = 1; address < 127; address++)
+  {
+    // The i2c scanner uses the return value of
+    // the Write.endTransmisstion to see if
+    // a device did acknowledge to the address.
+    Wire.beginTransmission(address);
+    error = Wire.endTransmission();
+
+    if (error == 0)
+    {
+      DEBUG_PRINT("I2C: device found at address 0x");
+      if (address < 16)
+      {
+        DEBUG_PRINT("0");
+      }
+      DEBUG_PRINT(address, HEX);
+      DEBUG_PRINTLN(" !");
+
+      nDevices++;
+    }
+    else if (error == 4)
+    {
+      DEBUG_PRINT("I2C: Unknown error at address 0x");
+      if (address < 16)
+      {
+        DEBUG_PRINT("0");
+      }
+      DEBUG_PRINTLN(address, HEX);
+    }
+  }
+  if (nDevices == 0)
+  {
+    DEBUG_PRINTLN("I2C: No I2C devices found\n");
+  }
+  else
+  {
+    DEBUG_PRINTLN("I2C: Done.\n");
+  }
+
+  delay(2000);
+}
+
+void ScanNfcTag()
+{
   static int count = 0;
   count++;
-  DEBUG_PRINTLN("\nScan a NFC tag (#" + String(count) + ")");
+  DEBUG_PRINTLN("\nNFC: Scan a NFC tag (#" + String(count) + ")");
 
   if (nfc.tagPresent())
   {
     NfcTag tag = nfc.read();
     DEBUG_PRINTLN(tag.getTagType());
-    DEBUG_PRINT("UID: ");
+    DEBUG_PRINT("NFC: tag read, UID: ");
     DEBUG_PRINTLN(tag.getUidString());
 
     if (tag.hasNdefMessage()) // every tag won't have a message
     {
 
       NdefMessage message = tag.getNdefMessage();
-      DEBUG_PRINT("\nThis NFC Tag contains an NDEF Message with ");
+      DEBUG_PRINT("NFC: This NFC Tag contains an NDEF Message with ");
       DEBUG_PRINT(message.getRecordCount());
       DEBUG_PRINT(" NDEF Record");
       if (message.getRecordCount() != 1)
@@ -74,7 +132,7 @@ void loop(void)
       int recordCount = message.getRecordCount();
       for (int i = 0; i < recordCount; i++)
       {
-        DEBUG_PRINT("NDEF Record ");
+        DEBUG_PRINT("NFC: NDEF Record ");
         DEBUG_PRINTLN(i + 1);
         NdefRecord record = message.getRecord(i);
         // NdefRecord record = message[i]; // alternate syntax
@@ -114,54 +172,4 @@ void loop(void)
       }
     }
   }
-  delay(3000);
-}
-
-void ScanI2C()
-{
-  byte error, address;
-  int nDevices;
-
-  DEBUG_PRINTLN("Scanning I2C Bus...");
-  nDevices = 0;
-  for (address = 1; address < 127; address++)
-  {
-    // The i2c scanner uses the return value of
-    // the Write.endTransmisstion to see if
-    // a device did acknowledge to the address.
-    Wire.beginTransmission(address);
-    error = Wire.endTransmission();
-
-    if (error == 0)
-    {
-      DEBUG_PRINT("I2C device found at address 0x");
-      if (address < 16)
-      {
-        DEBUG_PRINT("0");
-      }
-      DEBUG_PRINT(address, HEX);
-      DEBUG_PRINTLN(" !");
-
-      nDevices++;
-    }
-    else if (error == 4)
-    {
-      DEBUG_PRINT("Unknown error at address 0x");
-      if (address < 16)
-      {
-        DEBUG_PRINT("0");
-      }
-      DEBUG_PRINTLN(address, HEX);
-    }
-  }
-  if (nDevices == 0)
-  {
-    DEBUG_PRINTLN("No I2C devices found\n");
-  }
-  else
-  {
-    DEBUG_PRINTLN("Done.\n");
-  }
-
-  delay(2000);
 }
