@@ -8,30 +8,17 @@
 
 #define PN532_I2C_ADDRESS (0x48 >> 1)
 
-const int sclPin = D1;
-const int sdaPin = D2;
-const int resetPin = D3;
-
 PN532_I2C::PN532_I2C(TwoWire &wire)
 {
     _wire = &wire;
     command = 0;
-
-    pinMode(resetPin, OUTPUT);
 }
 
 void PN532_I2C::begin()
 {
+    // Already done in main INO!!
     //_wire->begin();
-    _wire->begin(sdaPin, sclPin);
-
-    // Reset the PN532
-    DMSG("Trying to reset PN532 via RST0 pin...");
-    digitalWrite(resetPin, HIGH);
-    digitalWrite(resetPin, LOW);
-    delay(500);
-    digitalWrite(resetPin, HIGH);
-    DMSG("DONE!\n");
+    //_wire->begin(sdaPin, sclPin);
 }
 
 void PN532_I2C::wakeup()

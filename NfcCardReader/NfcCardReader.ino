@@ -20,6 +20,8 @@ NfcAdapter nfc = NfcAdapter(pn532_i2c);
 
 const int sclPin = D1;
 const int sdaPin = D2;
+const int I2C_BUS_SPEED = 100000; // 100kHz for PCF8574
+const int I2C_CLK_STRETCH_LIMIT = 1600;
 
 #endif
 
@@ -27,10 +29,14 @@ void setup(void)
 {
   Serial.begin(115200);
 
-  DEBUG_PRINTLN("Initializing I2C Wire");
+  DEBUG_PRINTLN("I2C: Initializing Wire");
   Wire.begin(sdaPin, sclPin);
 
-  Wire.setClockStretchLimit(1600);
+  DEBUG_PRINTLN("I2C: setting bus speed to " + String(I2C_BUS_SPEED) + ".");
+  Wire.setClock(I2C_BUS_SPEED);
+
+  DEBUG_PRINTLN("I2C: setting clock stretch limit to " + String(I2C_CLK_STRETCH_LIMIT) + ".");
+  Wire.setClockStretchLimit(I2C_CLK_STRETCH_LIMIT);
 
   ScanI2C();
 
