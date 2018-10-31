@@ -28,6 +28,8 @@ void setup(void)
   Serial.println("Initializing I2C Wire");
   Wire.begin(sdaPin, sclPin);
 
+  Wire.setClockStretchLimit(1600);
+
   ScanI2C();
 
   Serial.println("Starting NDEF Reader");

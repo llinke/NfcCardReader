@@ -6,6 +6,9 @@
 #include "NfcTag.h"
 #include "Ndef.h"
 
+const int resetPin = D3;
+const int irqPin = D4;
+
 // Drivers
 #include "MifareClassic.h"
 #include "MifareUltralight.h"
@@ -17,8 +20,8 @@
 #define TAG_TYPE_4 (4)
 #define TAG_TYPE_UNKNOWN (99)
 
-#define IRQ (2)
-#define RESET (3) // Not connected by default on the NFC Shield
+#define IRQ (irqPin)
+#define RESET (resetPin) // Not connected by default on the NFC Shield
 
 class NfcAdapter
 {
