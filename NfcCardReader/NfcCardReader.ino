@@ -1,3 +1,6 @@
+#define ENABLE_SERIAL_DEBUG
+#include "SerialDebug.h"
+
 #if 0
 #include <SPI.h>
 #include <PN532_SPI.h>
@@ -7,7 +10,6 @@
 PN532_SPI pn532spi(SPI, 10);
 NfcAdapter nfc = NfcAdapter(pn532spi);
 #else
-
 #include <Wire.h>
 #include "src/PN532/PN532_I2C.h"
 #include "src/PN532/PN532.h"
@@ -25,14 +27,14 @@ void setup(void)
 {
   Serial.begin(115200);
 
-  Serial.println("Initializing I2C Wire");
+  DEBUG_PRINTLN("Initializing I2C Wire");
   Wire.begin(sdaPin, sclPin);
 
   Wire.setClockStretchLimit(1600);
 
   ScanI2C();
 
-  Serial.println("Starting NDEF Reader");
+  DEBUG_PRINTLN("Starting NDEF Reader");
   nfc.begin();
 }
 
@@ -40,41 +42,41 @@ void loop(void)
 {
   static int count = 0;
   count++;
-  Serial.println("\nScan a NFC tag (#" + String(count) + ")\n");
+  DEBUG_PRINTLN("\nScan a NFC tag (#" + String(count) + ")");
 
   if (nfc.tagPresent())
   {
     NfcTag tag = nfc.read();
-    Serial.println(tag.getTagType());
-    Serial.print("UID: ");
-    Serial.println(tag.getUidString());
+    DEBUG_PRINTLN(tag.getTagType());
+    DEBUG_PRINT("UID: ");
+    DEBUG_PRINTLN(tag.getUidString());
 
     if (tag.hasNdefMessage()) // every tag won't have a message
     {
 
       NdefMessage message = tag.getNdefMessage();
-      Serial.print("\nThis NFC Tag contains an NDEF Message with ");
-      Serial.print(message.getRecordCount());
-      Serial.print(" NDEF Record");
+      DEBUG_PRINT("\nThis NFC Tag contains an NDEF Message with ");
+      DEBUG_PRINT(message.getRecordCount());
+      DEBUG_PRINT(" NDEF Record");
       if (message.getRecordCount() != 1)
       {
-        Serial.print("s");
+        DEBUG_PRINT("s");
       }
-      Serial.println(".");
+      DEBUG_PRINTLN(".");
 
       // cycle through the records, printing some info from each
       int recordCount = message.getRecordCount();
       for (int i = 0; i < recordCount; i++)
       {
-        Serial.print("\nNDEF Record ");
-        Serial.println(i + 1);
+        DEBUG_PRINT("NDEF Record ");
+        DEBUG_PRINTLN(i + 1);
         NdefRecord record = message.getRecord(i);
         // NdefRecord record = message[i]; // alternate syntax
 
-        Serial.print("  TNF: ");
-        Serial.println(record.getTnf());
-        Serial.print("  Type: ");
-        Serial.println(record.getType()); // will be "" for TNF_EMPTY
+        DEBUG_PRINT("  TNF: ");
+        DEBUG_PRINTLN(record.getTnf());
+        DEBUG_PRINT("  Type: ");
+        DEBUG_PRINTLN(record.getType()); // will be "" for TNF_EMPTY
 
         // The TNF and Type should be used to determine how your application processes the payload
         // There's no generic processing for the payload, it's returned as a byte[]
@@ -83,7 +85,7 @@ void loop(void)
         record.getPayload(payload);
 
         // Print the Hex and Printable Characters
-        Serial.print("  Payload (HEX): ");
+        DEBUG_PRINT("  Payload (HEX): ");
         PrintHexChar(payload, payloadLength);
 
         // Force the data into a String (might work depending on the content)
@@ -93,15 +95,15 @@ void loop(void)
         {
           payloadAsString += (char)payload[c];
         }
-        Serial.print("  Payload (as String): ");
-        Serial.println(payloadAsString);
+        DEBUG_PRINT("  Payload (as String): ");
+        DEBUG_PRINTLN(payloadAsString);
 
         // id is probably blank and will return ""
         String uid = record.getId();
         if (uid != "")
         {
-          Serial.print("  ID: ");
-          Serial.println(uid);
+          DEBUG_PRINT("  ID: ");
+          DEBUG_PRINTLN(uid);
         }
       }
     }
@@ -114,7 +116,7 @@ void ScanI2C()
   byte error, address;
   int nDevices;
 
-  Serial.println("Scanning I2C Bus...");
+  DEBUG_PRINTLN("Scanning I2C Bus...");
   nDevices = 0;
   for (address = 1; address < 127; address++)
   {
@@ -126,33 +128,33 @@ void ScanI2C()
 
     if (error == 0)
     {
-      Serial.print("I2C device found at address 0x");
+      DEBUG_PRINT("I2C device found at address 0x");
       if (address < 16)
       {
-        Serial.print("0");
+        DEBUG_PRINT("0");
       }
-      Serial.print(address, HEX);
-      Serial.println(" !");
+      DEBUG_PRINT(address, HEX);
+      DEBUG_PRINTLN(" !");
 
       nDevices++;
     }
     else if (error == 4)
     {
-      Serial.print("Unknown error at address 0x");
+      DEBUG_PRINT("Unknown error at address 0x");
       if (address < 16)
       {
-        Serial.print("0");
+        DEBUG_PRINT("0");
       }
-      Serial.println(address, HEX);
+      DEBUG_PRINTLN(address, HEX);
     }
   }
   if (nDevices == 0)
   {
-    Serial.println("No I2C devices found\n");
+    DEBUG_PRINTLN("No I2C devices found\n");
   }
   else
   {
-    Serial.println("Done.\n");
+    DEBUG_PRINTLN("Done.\n");
   }
 
   delay(2000);
