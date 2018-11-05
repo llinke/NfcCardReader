@@ -48,6 +48,8 @@ const int I2C_CLK_STRETCH_LIMIT = 1600;
 
 // [NFC]
 const int I2C_NFC_IRQ_PIN = D3;
+const bool UseNfcInterrupt = true;
+const int TagPresentTimeout = 1000;
 const int ScanInterval = 3000;
 
 volatile unsigned long nextScan = millis();
@@ -643,14 +645,28 @@ void InitNfc()
   DEBUG_PRINTLN("Starting NDEF Reader");
   nfc.begin();
 
-  pinMode(I2C_NFC_IRQ_PIN, INPUT);
-  attachInterrupt(I2C_NFC_IRQ_PIN, onNfcCardDetected, RISING);
+  if (UseNfcInterrupt)
+  {
+    pinMode(I2C_NFC_IRQ_PIN, INPUT);
+    attachInterrupt(I2C_NFC_IRQ_PIN, onNfcCardDetected, RISING);
+  }
 }
 
-void ScanNfcTag()
+void HandleNfcTag()
 {
-  if (!isNfcCardDetected)
-    return;
+  if (UseNfcInterrupt)
+  {
+    if (!isNfcCardDetected)
+      return;
+  }
+  else
+  {
+    if (millis() > nextScan)
+      return;
+
+    isNfcCardDetected = true; // Force tgPresent scan if not using IRQ
+    nextScan = millis() + ScanInterval;
+  }
 
   isNfcCardDetected = false;
 
@@ -658,7 +674,7 @@ void ScanNfcTag()
   count++;
   DEBUG_PRINTLN("\nNFC: Scan a NFC tag (#" + String(count) + ")");
 
-  if (nfc.tagPresent())
+  if (nfc.tagPresent(TagPresentTimeout))
   {
     NfcTag tag = nfc.read();
     DEBUG_PRINTLN(tag.getTagType());
@@ -751,15 +767,7 @@ void setup(void)
 #pragma region Application Loop
 void loop(void)
 {
-  // if (millis() < nextScan)
-  // {
-  //   ScanNfcTag();
-  //   nextScan = millis() + ScanInterval;
-  // }
-  if (isNfcCardDetected)
-  {
-    ScanNfcTag();
-  }
+  HandleNfcTag();
 
   if (ledsStarted)
   {
