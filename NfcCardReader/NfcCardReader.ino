@@ -3,19 +3,22 @@
 // **************************************************
 // *** Compiler Flags
 // **************************************************
+#pragma region Compiler Flags
 // --- DEBUG ----------------------------------------
 // #define DEBUG_LOOP
 // --- Demo --------- -------------------------------
 #define PLAY_DEMO true
 // --- FX/Colors ------------------------------------
-#define DO_NOT_START_FX_ON_INIT
+//#define DO_NOT_START_FX_ON_INIT
 // --- WiFi ----------------------------------------
 // #define OFFLINE_MODE
+#pragma endregion
 // **************************************************
 
 // **************************************************
 // *** Includes
 // **************************************************
+#pragma region Includes
 #include <Arduino.h>
 #include "SerialDebug.h"
 #include <vector>
@@ -26,37 +29,34 @@
 #include "ColorPalettes.h"
 #include "NeoGroup.cpp"
 
-#if 0
-#include <SPI.h>
-#include <PN532_SPI.h>
-#include <PN532.h>
-#include <NfcAdapter.h>
-
-PN532_SPI pn532spi(SPI, 10);
-NfcAdapter nfc = NfcAdapter(pn532spi);
-#else
 #include <Wire.h>
 #include "src/PN532/PN532_I2C.h"
 #include "src/PN532/PN532.h"
 #include "src/NDEF/NfcAdapter.h"
+#pragma endregion
+// **************************************************
+
+// **************************************************
+// *** Variable and Constants Declarations
+// **************************************************
+#pragma region Variables and Constants
+// [I2C]
+const int I2C_SCL_PIN = D1;
+const int I2C_SCA_PIN = D2;
+const int I2C_BUS_SPEED = 100000; // 100kHz for PCF8574
+const int I2C_CLK_STRETCH_LIMIT = 1600;
+
+// [NFC]
+const int I2C_NFC_IRQ_PIN = D3;
+const int ScanInterval = 3000;
+
+volatile unsigned long nextScan = millis();
+volatile bool isNfcCardDetected = false;
 
 PN532_I2C pn532_i2c(Wire);
 NfcAdapter nfc = NfcAdapter(pn532_i2c);
 
-#endif
-
-// **************************************************
-// *** Variable and Constamts  Declarations
-// **************************************************
-const int sclPin = D1;
-const int sdaPin = D2;
-const int I2C_BUS_SPEED = 100000; // 100kHz for PCF8574
-const int I2C_CLK_STRETCH_LIMIT = 1600;
-
-const int ScanInterval = 3000;
-
-volatile unsigned long nextScan = millis();
-
+// [FastLED]
 const std::vector<int> groupSizes = {PIXEL_COUNT};
 volatile int activeGrpNr = 0;
 
@@ -92,11 +92,29 @@ uint8_t currentSat = 255;
 
 //std::vector<NeoGroup *> neoGroups;
 std::vector<NeoGroup> neoGroups;
+#pragma endregion
+// **************************************************
 
 // **************************************************
-// *** Helper methods
+// *** Event Handlers
 // **************************************************
-// [FastLED Helper methods]
+#pragma region Event Handlers
+// [NFC Event Handlers]
+void onNfcCardDetected()
+{
+  if (millis() < nextScan)
+  {
+    isNfcCardDetected = true;
+    nextScan = millis() + ScanInterval;
+  }
+}
+#pragma endregion
+// **************************************************
+
+// **************************************************
+// *** FastLED Helper methods
+// **************************************************
+#pragma region FastLED Helper methods
 int initStrip(bool doStart = false, bool playDemo = true)
 {
   if (ledsInitialized)
@@ -510,12 +528,8 @@ void NextColor(int nextCol = -1)
   SetColors(activeGrpNr, currColNr.at(activeGrpNr));
 }
 
-void setup(void)
+void InitFastLED()
 {
-  Serial.begin(115200);
-
-  DEBUG_PRINTLN("BOOT/SETUP ------------------------------------------------");
-
   DEBUG_PRINTLN("FastLED: Initializing color palettes.");
   InitColorNames();
   maxColNr = ColorNames.size();
@@ -546,9 +560,19 @@ void setup(void)
   //activeGrpNr = 0;
 
   DEBUG_PRINTLN("FastLED: Active group #" + String(activeGrpNr));
+}
 
+#pragma endregion
+// **************************************************
+
+// **************************************************
+// *** I2C Helper Methods
+// **************************************************
+#pragma region I2C Helper Methods
+void InitI2C()
+{
   DEBUG_PRINTLN("I2C: Initializing Wire");
-  Wire.begin(sdaPin, sclPin);
+  Wire.begin(I2C_SCA_PIN, I2C_SCL_PIN);
 
   DEBUG_PRINTLN("I2C: setting bus speed to " + String(I2C_BUS_SPEED) + ".");
   Wire.setClock(I2C_BUS_SPEED);
@@ -557,49 +581,6 @@ void setup(void)
   Wire.setClockStretchLimit(I2C_CLK_STRETCH_LIMIT);
 
   ScanI2C();
-
-  DEBUG_PRINTLN("Starting NDEF Reader");
-  nfc.begin();
-}
-
-void loop(void)
-{
-  if (millis() < nextScan)
-  {
-    ScanNfcTag();
-    nextScan = millis() + ScanInterval;
-  }
-
-  if (!ledsStarted)
-  {
-    //DEBUG_PRINTLN("Loop: LEDs not started, leaving loop.");
-    return;
-  }
-
-  bool ledsUpdated = false;
-
-  for (int grpNr = 0; grpNr < groupSizes.size(); grpNr++)
-  {
-    NeoGroup *neoGroup = &(neoGroups.at(grpNr));
-
-    if ((neoGroup->LedFirstNr + neoGroup->LedCount) <= PIXEL_COUNT)
-    {
-      ledsUpdated |= neoGroup->Update();
-    }
-  }
-
-  if (ledsUpdated)
-  {
-#ifdef DEBUG_LOOP
-    DEBUG_PRINTLN("Loop: Refreshing LEDs.");
-#endif
-    FastLED.show();
-  }
-
-  // REQUIRED: allow processing of interrupts etc
-  //delay(ScanInterval);
-  delay(0);
-  //yield();
 }
 
 void ScanI2C()
@@ -650,9 +631,29 @@ void ScanI2C()
 
   delay(2000);
 }
+#pragma endregion
+// **************************************************
+
+// **************************************************
+// *** I2C Helper Methods
+// **************************************************
+#pragma region NFC Helper Methods
+void InitNfc()
+{
+  DEBUG_PRINTLN("Starting NDEF Reader");
+  nfc.begin();
+
+  pinMode(I2C_NFC_IRQ_PIN, INPUT);
+  attachInterrupt(I2C_NFC_IRQ_PIN, onNfcCardDetected, RISING);
+}
 
 void ScanNfcTag()
 {
+  if (!isNfcCardDetected)
+    return;
+
+  isNfcCardDetected = false;
+
   static int count = 0;
   count++;
   DEBUG_PRINTLN("\nNFC: Scan a NFC tag (#" + String(count) + ")");
@@ -722,3 +723,71 @@ void ScanNfcTag()
     }
   }
 }
+#pragma endregion
+// **************************************************
+
+// **************************************************
+// *** Application Setup
+// **************************************************
+#pragma region Application Setup
+void setup(void)
+{
+  Serial.begin(115200);
+
+  DEBUG_PRINTLN("BOOT/SETUP ------------------------------------------------");
+
+  InitFastLED();
+
+  InitI2C();
+
+  InitNfc();
+}
+#pragma endregion
+// **************************************************
+
+// **************************************************
+// *** Application Loop
+// **************************************************
+#pragma region Application Loop
+void loop(void)
+{
+  // if (millis() < nextScan)
+  // {
+  //   ScanNfcTag();
+  //   nextScan = millis() + ScanInterval;
+  // }
+  if (isNfcCardDetected)
+  {
+    ScanNfcTag();
+  }
+
+  if (ledsStarted)
+  {
+    bool ledsUpdated = false;
+
+    for (int grpNr = 0; grpNr < groupSizes.size(); grpNr++)
+    {
+      NeoGroup *neoGroup = &(neoGroups.at(grpNr));
+
+      if ((neoGroup->LedFirstNr + neoGroup->LedCount) <= PIXEL_COUNT)
+      {
+        ledsUpdated |= neoGroup->Update();
+      }
+    }
+
+    if (ledsUpdated)
+    {
+#ifdef DEBUG_LOOP
+      DEBUG_PRINTLN("Loop: Refreshing LEDs.");
+#endif
+      FastLED.show();
+    }
+  }
+
+  // REQUIRED: allow processing of interrupts etc
+  //delay(ScanInterval);
+  delay(0);
+  //yield();
+}
+#pragma endregion
+// **************************************************
