@@ -42,7 +42,7 @@ int8_t PN532_I2C::writeCommand(const uint8_t *header, uint8_t hlen, const uint8_
     write(PN532_HOSTTOPN532);
     uint8_t sum = PN532_HOSTTOPN532; // sum of TFI + DATA
 
-    DMSG("write: ");
+    DMSG("PN532_I2C: write: ");
 
     for (uint8_t i = 0; i < hlen; i++)
     {
@@ -54,7 +54,7 @@ int8_t PN532_I2C::writeCommand(const uint8_t *header, uint8_t hlen, const uint8_
         }
         else
         {
-            DMSG("\nToo many data to send, I2C doesn't support such a big packet\n"); // I2C max packet: 32 bytes
+            DMSG("\nPN532_I2C: Too many data to send, I2C doesn't support such a big packet\n"); // I2C max packet: 32 bytes
             return PN532_INVALID_FRAME;
         }
     }
@@ -69,7 +69,7 @@ int8_t PN532_I2C::writeCommand(const uint8_t *header, uint8_t hlen, const uint8_
         }
         else
         {
-            DMSG("\nToo many data to send, I2C doesn't support such a big packet\n"); // I2C max packet: 32 bytes
+            DMSG("\nPN532_I2C: Too many data to send, I2C doesn't support such a big packet\n"); // I2C max packet: 32 bytes
             return PN532_INVALID_FRAME;
         }
     }
@@ -184,7 +184,7 @@ int16_t PN532_I2C::readResponse(uint8_t buf[], uint8_t len, uint16_t timeout)
         return PN532_NO_SPACE; // not enough space
     }
 
-    DMSG("read:  ");
+    DMSG("PN532_I2C: read:  ");
     DMSG_HEX(cmd);
 
     uint8_t sum = PN532_PN532TOHOST + cmd;
@@ -200,7 +200,7 @@ int16_t PN532_I2C::readResponse(uint8_t buf[], uint8_t len, uint16_t timeout)
     uint8_t checksum = read();
     if (0 != (uint8_t)(sum + checksum))
     {
-        DMSG("checksum is not ok\n");
+        DMSG("PN532_I2C: checksum is not ok\n");
         return PN532_INVALID_FRAME;
     }
     read(); // POSTAMBLE
@@ -213,7 +213,7 @@ int8_t PN532_I2C::readAckFrame()
     const uint8_t PN532_ACK[] = {0, 0, 0xFF, 0, 0xFF, 0};
     uint8_t ackBuf[sizeof(PN532_ACK)];
 
-    DMSG("wait for ack at : ");
+    DMSG("PN532_I2C: wait for ack at : ");
     DMSG(millis());
     DMSG('\n');
 
@@ -232,12 +232,12 @@ int8_t PN532_I2C::readAckFrame()
         time++;
         if (time > PN532_ACK_WAIT_TIME)
         {
-            DMSG("Time out when waiting for ACK\n");
+            DMSG("PN532_I2C: Time out when waiting for ACK\n");
             return PN532_TIMEOUT;
         }
     } while (1);
 
-    DMSG("ready at : ");
+    DMSG("PN532_I2C: ready at : ");
     DMSG(millis());
     DMSG('\n');
 
@@ -248,7 +248,7 @@ int8_t PN532_I2C::readAckFrame()
 
     if (memcmp(ackBuf, PN532_ACK, sizeof(PN532_ACK)))
     {
-        DMSG("Invalid ACK\n");
+        DMSG("PN532_I2C: Invalid ACK\n");
         return PN532_INVALID_ACK;
     }
 

@@ -12,7 +12,7 @@ NdefRecord::NdefRecord()
     _id = (byte *)NULL;
 }
 
-NdefRecord::NdefRecord(const NdefRecord& rhs)
+NdefRecord::NdefRecord(const NdefRecord &rhs)
 {
     //Serial.println("NdefRecord Constructor 2 (copy)");
 
@@ -26,22 +26,21 @@ NdefRecord::NdefRecord(const NdefRecord& rhs)
 
     if (_typeLength)
     {
-        _type = (byte*)malloc(_typeLength);
+        _type = (byte *)malloc(_typeLength);
         memcpy(_type, rhs._type, _typeLength);
     }
 
     if (_payloadLength)
     {
-        _payload = (byte*)malloc(_payloadLength);
+        _payload = (byte *)malloc(_payloadLength);
         memcpy(_payload, rhs._payload, _payloadLength);
     }
 
     if (_idLength)
     {
-        _id = (byte*)malloc(_idLength);
+        _id = (byte *)malloc(_idLength);
         memcpy(_id, rhs._id, _idLength);
     }
-
 }
 
 // TODO NdefRecord::NdefRecord(tnf, type, payload, id)
@@ -65,7 +64,7 @@ NdefRecord::~NdefRecord()
     }
 }
 
-NdefRecord& NdefRecord::operator=(const NdefRecord& rhs)
+NdefRecord &NdefRecord::operator=(const NdefRecord &rhs)
 {
     //Serial.println("NdefRecord ASSIGN");
 
@@ -94,19 +93,19 @@ NdefRecord& NdefRecord::operator=(const NdefRecord& rhs)
 
         if (_typeLength)
         {
-            _type = (byte*)malloc(_typeLength);
+            _type = (byte *)malloc(_typeLength);
             memcpy(_type, rhs._type, _typeLength);
         }
 
         if (_payloadLength)
         {
-            _payload = (byte*)malloc(_payloadLength);
+            _payload = (byte *)malloc(_payloadLength);
             memcpy(_payload, rhs._payload, _payloadLength);
         }
 
         if (_idLength)
         {
-            _id = (byte*)malloc(_idLength);
+            _id = (byte *)malloc(_idLength);
             memcpy(_id, rhs._id, _idLength);
         }
     }
@@ -140,7 +139,7 @@ void NdefRecord::encode(byte *data, bool firstRecord, bool lastRecord)
 {
     // assert data > getEncodedSize()
 
-    uint8_t* data_ptr = &data[0];
+    uint8_t *data_ptr = &data[0];
 
     *data_ptr = getTnfByte(firstRecord, lastRecord);
     data_ptr += 1;
@@ -148,10 +147,13 @@ void NdefRecord::encode(byte *data, bool firstRecord, bool lastRecord)
     *data_ptr = _typeLength;
     data_ptr += 1;
 
-    if (_payloadLength <= 0xFF) {  // short record
+    if (_payloadLength <= 0xFF)
+    { // short record
         *data_ptr = _payloadLength;
         data_ptr += 1;
-    } else { // long format
+    }
+    else
+    { // long format
         // 4 bytes but we store length as an int
         data_ptr[0] = 0x0; // (_payloadLength >> 24) & 0xFF;
         data_ptr[1] = 0x0; // (_payloadLength >> 16) & 0xFF;
@@ -184,11 +186,13 @@ byte NdefRecord::getTnfByte(bool firstRecord, bool lastRecord)
 {
     int value = _tnf;
 
-    if (firstRecord) { // mb
+    if (firstRecord)
+    { // mb
         value = value | 0x80;
     }
 
-    if (lastRecord) { //
+    if (lastRecord)
+    { //
         value = value | 0x40;
     }
 
@@ -197,11 +201,13 @@ byte NdefRecord::getTnfByte(bool firstRecord, bool lastRecord)
     //     value = value | 0x20;
     // }
 
-    if (_payloadLength <= 0xFF) {
+    if (_payloadLength <= 0xFF)
+    {
         value = value | 0x10;
     }
 
-    if (_idLength) {
+    if (_idLength)
+    {
         value = value | 0x8;
     }
 
@@ -242,19 +248,19 @@ String NdefRecord::getType()
 }
 
 // this assumes the caller created type correctly
-void NdefRecord::getType(uint8_t* type)
+void NdefRecord::getType(uint8_t *type)
 {
     memcpy(type, _type, _typeLength);
 }
 
-void NdefRecord::setType(const byte * type, const unsigned int numBytes)
+void NdefRecord::setType(const byte *type, const unsigned int numBytes)
 {
-    if(_typeLength)
+    if (_typeLength)
     {
         free(_type);
     }
 
-    _type = (uint8_t*)malloc(numBytes);
+    _type = (uint8_t *)malloc(numBytes);
     memcpy(_type, type, numBytes);
     _typeLength = numBytes;
 }
@@ -265,14 +271,14 @@ void NdefRecord::getPayload(byte *payload)
     memcpy(payload, _payload, _payloadLength);
 }
 
-void NdefRecord::setPayload(const byte * payload, const int numBytes)
+void NdefRecord::setPayload(const byte *payload, const int numBytes)
 {
     if (_payloadLength)
     {
         free(_payload);
     }
 
-    _payload = (byte*)malloc(numBytes);
+    _payload = (byte *)malloc(numBytes);
     memcpy(_payload, payload, numBytes);
     _payloadLength = numBytes;
 }
@@ -290,14 +296,14 @@ void NdefRecord::getId(byte *id)
     memcpy(id, _id, _idLength);
 }
 
-void NdefRecord::setId(const byte * id, const unsigned int numBytes)
+void NdefRecord::setId(const byte *id, const unsigned int numBytes)
 {
     if (_idLength)
     {
         free(_id);
     }
 
-    _id = (byte*)malloc(numBytes);
+    _id = (byte *)malloc(numBytes);
     memcpy(_id, id, numBytes);
     _idLength = numBytes;
 }
@@ -305,8 +311,11 @@ void NdefRecord::setId(const byte * id, const unsigned int numBytes)
 void NdefRecord::print()
 {
     Serial.println(F("  NDEF Record"));
-    Serial.print(F("    TNF 0x"));Serial.print(_tnf, HEX);Serial.print(" ");
-    switch (_tnf) {
+    Serial.print(F("    TNF 0x"));
+    Serial.print(_tnf, HEX);
+    Serial.print(" ");
+    switch (_tnf)
+    {
     case TNF_EMPTY:
         Serial.println(F("Empty"));
         break;
@@ -334,19 +343,31 @@ void NdefRecord::print()
     default:
         Serial.println();
     }
-    Serial.print(F("    Type Length 0x"));Serial.print(_typeLength, HEX);Serial.print(" ");Serial.println(_typeLength);
-    Serial.print(F("    Payload Length 0x"));Serial.print(_payloadLength, HEX);;Serial.print(" ");Serial.println(_payloadLength);
+    Serial.print(F("    Type Length 0x"));
+    Serial.print(_typeLength, HEX);
+    Serial.print(" ");
+    Serial.println(_typeLength);
+    Serial.print(F("    Payload Length 0x"));
+    Serial.print(_payloadLength, HEX);
+    ;
+    Serial.print(" ");
+    Serial.println(_payloadLength);
     if (_idLength)
     {
-        Serial.print(F("    Id Length 0x"));Serial.println(_idLength, HEX);
+        Serial.print(F("    Id Length 0x"));
+        Serial.println(_idLength, HEX);
     }
-    Serial.print(F("    Type "));PrintHexChar(_type, _typeLength);
+    Serial.print(F("    Type "));
+    PrintHexChar(_type, _typeLength);
     // TODO chunk large payloads so this is readable
-    Serial.print(F("    Payload "));PrintHexChar(_payload, _payloadLength);
+    Serial.print(F("    Payload "));
+    PrintHexChar(_payload, _payloadLength);
     if (_idLength)
     {
-        Serial.print(F("    Id "));PrintHexChar(_id, _idLength);
+        Serial.print(F("    Id "));
+        PrintHexChar(_id, _idLength);
     }
-    Serial.print(F("    Record is "));Serial.print(getEncodedSize());Serial.println(" bytes");
-
+    Serial.print(F("    Record is "));
+    Serial.print(getEncodedSize());
+    Serial.println(" bytes");
 }

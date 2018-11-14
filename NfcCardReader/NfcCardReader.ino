@@ -49,7 +49,7 @@ const int I2C_CLK_STRETCH_LIMIT = 1600;
 // [NFC]
 const int I2C_NFC_IRQ_PIN = D5;
 const bool UseNfcInterrupt = false;
-const int TagPresentTimeout = 100;
+const int TagPresentTimeout = 0; //100;
 const int ScanInterval = 1000;
 const int NfcIrqStateIfCard = 0;
 
@@ -663,7 +663,7 @@ void ScanI2C()
 #pragma region NFC Helper Methods
 void InitNfc()
 {
-  DEBUG_PRINTLN("Starting NDEF Reader");
+  DEBUG_PRINTLN("NFC: Starting NDEF Reader");
 
   if (UseNfcInterrupt)
   {
@@ -717,7 +717,7 @@ void HandleNfcTag()
   DEBUG_PRINT("NFC: tag read, UID: ");
   DEBUG_PRINTLN(tag.getUidString());
 
-  if (tag.hasNdefMessage()) // every tag won't have a message
+  if (!tag.hasNdefMessage()) // every tag won't have a message
   {
     DEBUG_PRINTLN("NFC: no NDEF message on tag.");
     return;

@@ -5,27 +5,30 @@ NfcTag::NfcTag()
     _uid = 0;
     _uidLength = 0;
     _tagType = "Unknown";
-    _ndefMessage = (NdefMessage*)NULL;
+    _ndefMessage = (NdefMessage *)NULL;
 }
 
 NfcTag::NfcTag(byte *uid, unsigned int uidLength)
 {
+    Serial.println("NfcTag.ctor: uid");
     _uid = uid;
     _uidLength = uidLength;
     _tagType = "Unknown";
-    _ndefMessage = (NdefMessage*)NULL;
+    _ndefMessage = (NdefMessage *)NULL;
 }
 
-NfcTag::NfcTag(byte *uid, unsigned int  uidLength, String tagType)
+NfcTag::NfcTag(byte *uid, unsigned int uidLength, String tagType)
 {
+    Serial.println("NfcTag.ctor: uid, tagType");
     _uid = uid;
     _uidLength = uidLength;
     _tagType = tagType;
-    _ndefMessage = (NdefMessage*)NULL;
+    _ndefMessage = (NdefMessage *)NULL;
 }
 
-NfcTag::NfcTag(byte *uid, unsigned int  uidLength, String tagType, NdefMessage& ndefMessage)
+NfcTag::NfcTag(byte *uid, unsigned int uidLength, String tagType, NdefMessage &ndefMessage)
 {
+    Serial.println("NfcTag.ctor: uid, tagType, ndefMsg");
     _uid = uid;
     _uidLength = uidLength;
     _tagType = tagType;
@@ -35,6 +38,7 @@ NfcTag::NfcTag(byte *uid, unsigned int  uidLength, String tagType, NdefMessage& 
 // I don't like this version, but it will use less memory
 NfcTag::NfcTag(byte *uid, unsigned int uidLength, String tagType, const byte *ndefData, const int ndefDataLength)
 {
+    Serial.println("NfcTag.ctor: uid, tagType, mdefData");
     _uid = uid;
     _uidLength = uidLength;
     _tagType = tagType;
@@ -46,7 +50,7 @@ NfcTag::~NfcTag()
     delete _ndefMessage;
 }
 
-NfcTag& NfcTag::operator=(const NfcTag& rhs)
+NfcTag &NfcTag::operator=(const NfcTag &rhs)
 {
     if (this != &rhs)
     {
@@ -108,8 +112,10 @@ NdefMessage NfcTag::getNdefMessage()
 
 void NfcTag::print()
 {
-    Serial.print(F("NFC Tag - "));Serial.println(_tagType);
-    Serial.print(F("UID "));Serial.println(getUidString());
+    Serial.print(F("NFC Tag - "));
+    Serial.println(_tagType);
+    Serial.print(F("UID "));
+    Serial.println(getUidString());
     if (_ndefMessage == NULL)
     {
         Serial.println(F("\nNo NDEF Message"));
