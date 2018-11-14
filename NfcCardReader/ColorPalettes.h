@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 
-// #define DUMP_PALETTE
+#define DUMP_PALETTE
 
 // #define BOOST_COLORS
 #define BOOST_SAT_MIN 160
@@ -53,92 +53,21 @@ void DumpPalette(std::vector<CRGB> pal)
 }
 #pragma endregion
 
-#pragma region "WorldCup 2018"
-const std::vector<String> WorldCupTeamKeys = {
-    "RUS", "KSA", "EGY", "URU", // Group A
-    "POR", "ESP", "MAR", "IRN", // Group B
-    "FRA", "AUS", "PER", "DEN", // Group C
-    "ARG", "ISL", "CRO", "NGA", // Group D
-    "BRA", "SUI", "CRC", "SRB", // Group E
-    "GER", "MEX", "SWE", "KOR", // Group F
-    "BEL", "PAN", "TUN", "ENG", // Group G
-    "POL", "SEN", "COL", "JPN", // Group H
-};
+#pragma region "NFC Card"
+const std::vector<String> NfcCardKeys = {
+    "Idle", "Card", "Error"};
 
-const std::map<String, String> WorldCupTeamNames =
+const std::map<String, String> NfcCardNames =
     {
-        {"RUS", "Russland"},
-        {"KSA", "S.Arabien"},
-        {"EGY", "Ägypten"},
-        {"URU", "Uruguay"},
-        {"POR", "Portugal"},
-        {"ESP", "Spanien"},
-        {"MAR", "Marokko"},
-        {"IRN", "Iran"},
-        {"FRA", "Frankreich"},
-        {"AUS", "Australien"},
-        {"PER", "Peru"},
-        {"DEN", "Dänemark"},
-        {"ARG", "Argentinien"},
-        {"ISL", "Island"},
-        {"CRO", "Kroatien"},
-        {"NGA", "Nigeria"},
-        {"BRA", "Brasilien"},
-        {"SUI", "Schweiz"},
-        {"CRC", "Costa Rica"},
-        {"SRB", "Serbien"},
-        {"GER", "Deutschland"},
-        {"MEX", "Mexiko"},
-        {"SWE", "Schweden"},
-        {"KOR", "Korea"},
-        {"BEL", "Belgien"},
-        {"PAN", "Panama"},
-        {"TUN", "Tunesien"},
-        {"ENG", "England"},
-        {"POL", "Polen"},
-        {"SEN", "Senegal"},
-        {"COL", "Colombia"},
-        {"JPN", "Japan"},
-};
+        {"Idle", "Idle"},
+        {"Card", "Card read"},
+        {"Error", "Card error"}};
 
-const std::map<String, std::vector<CRGB>> WorldCupTeamColors =
+const std::map<String, std::vector<CRGB>> NfcCardColors =
     {
-        // {"TEST1", {0xFFFFFF, 0x808080, 0x404040}},
-        // {"TEST2", {0x404040, 0x202020, 0x101010}},
-        // {"RUS", {0xFFFFFF, 0xFFFFFF, 0x0039A6, 0x0039A6, 0xD52B1E, 0xD52B1E}},
-        {"RUS", {0xFFFFFF, 0x0039A6, 0xD52B1E}},
-        {"KSA", {0x006C35, 0xFFFFFF, 0x006C35}},
-        {"EGY", {0xCE1126, 0xFFFFFF, 0x080808}},
-        {"URU", {0x0038A8, 0xFFFFFF, 0xFCD116, 0x0038A8, 0xFFFFFF, 0x0038A8}},
-        {"POR", {0x006600, 0xFF0000, 0xFF0000}},
-        {"ESP", {0xC60B1E, 0xFFC400, 0xC60B1E}},
-        {"MAR", {0xC1272D, 0x006233, 0xC1272D}},
-        {"IRN", {0x239F40, 0xFFFFFF, 0xDA0000}},
-        {"FRA", {0x002395, 0xFFFFFF, 0xED2939}},
-        {"AUS", {0x012169, 0x012169, 0xFFFFFF, 0xE4002B, 0xFFFFFF, 0x012169}},
-        {"PER", {0xD91023, 0xFFFFFF, 0xD91023}},
-        {"DEN", {0xC60C30, 0xFFFFFF, 0xC60C30, 0xFFFFFF, 0xC60C30, 0xC60C30}},
-        {"ARG", {0x74ACDF, 0xFFFFFF, 0xF6B40E}},
-        {"ISL", {0x02529C, 0xFFFFFF, 0xDC1E35, 0xFFFFFF, 0x02529C, 0x02529C}},
-        {"CRO", {0xFF0000, 0xFFFFFF, 0x171796}},
-        {"NGA", {0x008751, 0xFFFFFF, 0x008751}},
-        {"BRA", {0x009B3A, 0xFEDF00, 0x002776, 0x002776, 0xFEDF00, 0x009B3A}},
-        {"SUI", {0xD52B1E, 0xFFFFFF, 0xD52B1E}},
-        {"CRC", {0x002B7F, 0xFFFFFF, 0xCE1126, 0xCE1126, 0xFFFFFF, 0x002B7F}},
-        {"SRB", {0xC6363C, 0x0C4076, 0xFFFFFF}},
-        {"GER", {0x080808, 0xDD0000, 0xFFCE00}},
-        {"MEX", {0x006847, 0xFFFFFF, 0xCE1126}},
-        {"SWE", {0x006BA8, 0xFECD01, 0x006BA8}},
-        {"KOR", {0xFFFFFF, 0xC60C30, 0xC60C30, 0x003478, 0x003478, 0xFFFFFF}},
-        {"BEL", {0x080808, 0xFAE042, 0xED2939}},
-        {"PAN", {0xFFFFFF, 0xD21034, 0xD21034, 0x005293, 0x005293, 0xFFFFFF}},
-        {"TUN", {0xE70013, 0xFFFFFF, 0xE70013}},
-        {"ENG", {0xFFFFFF, 0xCF081F, 0xFFFFFF}},
-        {"POL", {0xDC143C, 0xDC143C, 0xFFFFFF, 0xFFFFFF}},
-        // {"POL", {0xDC143C, 0xFFFFFF}},
-        {"SEN", {0x00853F, 0xFDEF42, 0xE31B23}},
-        {"COL", {0xFCD116, 0x003893, 0xCE1126}},
-        {"JPN", {0xFFFFFF, 0xBC002D, 0xFFFFFF}},
+        {"Idle", {0x000080, 0x0000FF, 0x000080, 0x000000, 0x0000FF, 0x000000, 0x000000, 0x000000}},
+        {"Card", {0x008000, 0x00FF00, 0x008000, 0x000000, 0x00FF00, 0x000000, 0x000000, 0x000000}},
+        {"Error", {0x800000, 0xFF0000, 0x800000, 0x000000, 0xFF0000, 0x000000, 0x000000, 0x000000}},
 };
 #pragma endregion
 
@@ -365,29 +294,29 @@ std::vector<CRGB> GeneratePaletteFromHue(
 //     "Gelb"};
 #pragma endregion
 
-#pragma region "WorldCup 2018"
-std::vector<CRGB> CreateTeamColorPalette(String teamKey)
+#pragma region "NFC Card"
+std::vector<CRGB> CreateNfcColorPalette(String nfcKey)
 {
-    DEBUG_PRINTLN("Initializing team " + teamKey + "...");
+    DEBUG_PRINTLN("Initializing NFC " + nfcKey + "...");
 
-    DEBUG_PRINTLN("Team:" + teamKey + " -> " + WorldCupTeamNames.find(teamKey)->second);
+    DEBUG_PRINTLN("NFC:" + nfcKey + " -> " + NfcCardNames.find(nfcKey)->second);
 
-    std::vector<CRGB> teamColors = WorldCupTeamColors.find(teamKey)->second;
-    std::vector<CRGB> teamPalette = {};
-    // teamPalette.push_back(LED_BLACK);
-    teamPalette.push_back(LED_GRAY_DARK);
-    for (int tc = 0; tc < teamColors.size(); tc++)
+    std::vector<CRGB> nfcColors = NfcCardColors.find(nfcKey)->second;
+    std::vector<CRGB> nfcPalette = {};
+    // nfcPalette.push_back(LED_BLACK);
+    // nfcPalette.push_back(LED_GRAY_DARK);
+    for (int tc = 0; tc < nfcColors.size(); tc++)
     {
-        teamPalette.push_back(BoostColor(teamColors.at(tc)));
+        nfcPalette.push_back(BoostColor(nfcColors.at(tc)));
     }
-    // teamPalette.push_back(LED_GRAY_MEDIUM);
-    // teamPalette.push_back(LED_GRAY_DARK);
-    // teamPalette.push_back(LED_GRAY_MEDIUM);
-    // for (int tc = 0; tc < teamColors.size(); tc++)
+    // nfcPalette.push_back(LED_GRAY_MEDIUM);
+    // nfcPalette.push_back(LED_GRAY_DARK);
+    // nfcPalette.push_back(LED_GRAY_MEDIUM);
+    // for (int tc = 0; tc < nfcColors.size(); tc++)
     // {
-    //     teamPalette.push_back(BoostColor(teamColors.at(teamColors.size() - tc)));
+    //     nfcPalette.push_back(BoostColor(nfcColors.at(nfcColors.size() - tc)));
     // }
-    return teamPalette;
+    return nfcPalette;
 }
 #pragma endregion
 
@@ -413,19 +342,19 @@ void InitColorPalettes()
     // }
 
     // Placeholders for dynamic palettes from hue
-    AddColorPalette("Farbe statisch", (std::vector<CRGB>)NULL /*AnalogousPaletteFromHue(hue, 255)*/, false);
-    AddColorPalette("Farbmix - Analog", (std::vector<CRGB>)NULL /*AnalogousPaletteFromHue(hue, 255)*/, false);
-    AddColorPalette("Farbmix Analog+Komplement", (std::vector<CRGB>)NULL /*AnalogousPaletteFromHue(hue, 255, true)*/, false);
-    AddColorPalette("Farbmix Angrenzend", (std::vector<CRGB>)NULL /*AdjacentPaletteFromHue(hue, 255)*/, false);
-    AddColorPalette("Farbmix Angrenzend+Komplement", (std::vector<CRGB>)NULL /*AdjacentPaletteFromHue(hue, 255, true)*/, false);
-    AddColorPalette("Farbmix Triade", (std::vector<CRGB>)NULL /*TriadPaletteFromHue(hue, 255)*/, false);
-    AddColorPalette("Farbmix Triade+Komplement", (std::vector<CRGB>)NULL /*TriadPaletteFromHue(hue, 255, true)*/, false);
+    // AddColorPalette("Farbe statisch", (std::vector<CRGB>)NULL /*AnalogousPaletteFromHue(hue, 255)*/, false);
+    // AddColorPalette("Farbmix Analog", (std::vector<CRGB>)NULL /*AnalogousPaletteFromHue(hue, 255)*/, false);
+    // AddColorPalette("Farbmix Analog+Komplement", (std::vector<CRGB>)NULL /*AnalogousPaletteFromHue(hue, 255, true)*/, false);
+    // AddColorPalette("Farbmix Angrenzend", (std::vector<CRGB>)NULL /*AdjacentPaletteFromHue(hue, 255)*/, false);
+    // AddColorPalette("Farbmix Angrenzend+Komplement", (std::vector<CRGB>)NULL /*AdjacentPaletteFromHue(hue, 255, true)*/, false);
+    // AddColorPalette("Farbmix Triade", (std::vector<CRGB>)NULL /*TriadPaletteFromHue(hue, 255)*/, false);
+    // AddColorPalette("Farbmix Triade+Komplement", (std::vector<CRGB>)NULL /*TriadPaletteFromHue(hue, 255, true)*/, false);
 
     // World Cup 2018
-    for (int teamNr = 0; teamNr < WorldCupTeamKeys.size(); teamNr++)
+    for (int nfcNr = 0; nfcNr < NfcCardKeys.size(); nfcNr++)
     {
-        String teamKey = WorldCupTeamKeys[teamNr];
-        AddColorPalette("WM18 " + teamKey, CreateTeamColorPalette(teamKey), false);
+        String nfcKey = NfcCardKeys[nfcNr];
+        AddColorPalette("NFC " + nfcKey, CreateNfcColorPalette(nfcKey), false);
     }
 
     // Add some more pretty palettes :-)
