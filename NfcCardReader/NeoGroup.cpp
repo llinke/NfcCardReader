@@ -38,8 +38,9 @@
 
 #define FADEOUT_DURATION 500
 #define FADEOUT_STEPS 16
-#define CROSSFADE_PALETTES true
-#define CROSSFADE_MAX_CHANGE_PER_STEP 16
+#define CROSSFADE_PALETTES false
+// #define CROSSFADE_MAX_CHANGE_PER_STEP 16
+#define CROSSFADE_MAX_CHANGE_PER_STEP 64
 
 // #define FxColorWavesWithBrightness
 
@@ -78,9 +79,9 @@ enum direction
 
 enum mirror
 {
-	MIRROR0, // no mirroring
-	MIRROR1, // set even/odd as mirror values
-	MIRROR2  // mirror each second value
+	NOMIRROR,	  // no mirroring
+	MIRRORODDEVEN, // set even/odd as mirror values
+	MIRRORSECOND   // mirror each second value
 };
 #pragma endregion
 
@@ -102,7 +103,7 @@ class NeoGroup
 	int fxFadeOut = 0;
 	int fxAmountGlitter;
 	uint8_t fxLength;
-	mirror fxMirror = MIRROR0;
+	mirror fxMirror = NOMIRROR;
 	bool onlyOnce = false;
 
 	//std::vector<CRGB> currentColors = {};
@@ -156,7 +157,7 @@ class NeoGroup
 		int amountglitter = 0,
 		int fps = 50,
 		direction direction = FORWARD,
-		mirror mirror = MIRROR0,
+		mirror mirror = NOMIRROR,
 		wave wave = LINEAR,
 		int speed = 1,
 		double fpsFactor = 1.0)
@@ -474,25 +475,25 @@ class NeoGroup
 #pragma endregion
 
 #pragma region SetPixel functions
-	void FillPixels(int pos, int count, CRGB newcolor, mirror mirror = MIRROR0, bool blend = false)
+	void FillPixels(int pos, int count, CRGB newcolor, mirror mirror = NOMIRROR, bool blend = false)
 	{
 		for (int p = pos; p < (pos + count); p++)
 			SetPixel(p, newcolor, mirror, blend);
 	}
 
-	void SetPixel(int pos, CRGB newcolor, mirror mirror = MIRROR0, bool blend = false)
+	void SetPixel(int pos, CRGB newcolor, mirror mirror = NOMIRROR, bool blend = false)
 	{
 		int ledNormalNr = -1;
 		int ledMirrorNr = -1;
 
-		if (mirror == MIRROR1) // set even/odd as mirror values
+		if (mirror == MIRRORODDEVEN) // set even/odd as mirror values
 		{
 			int newPos = pos / 2;
 			ledNormalNr = ((pos % 2) != 0)
 							  ? CapLedPosition(newPos + LedOffset, LedCount)
 							  : CapLedPosition((LedCount - newPos - 1) + LedOffset, LedCount);
 		}
-		else if (mirror == MIRROR2) // mirror each second value
+		else if (mirror == MIRRORSECOND) // mirror each second value
 		{
 			int newPos = pos / 2;
 			int mirrorPos = LedCount - newPos - 1;
@@ -663,7 +664,7 @@ class NeoGroup
 		if (random8() < chanceOfGlitter)
 		{
 #ifdef PIXEL_USE_OFFSET
-			SetPixel(random16(LedCount), CRGB::White, MIRROR0, true);
+			SetPixel(random16(LedCount), CRGB::White, NOMIRROR, true);
 #else
 			LedFirst[random16(LedCount)] += CRGB::White;
 #endif
@@ -680,7 +681,7 @@ class NeoGroup
 		fadeToBlackBy(LedFirst, LedCount, 8 * fxSpeed);
 #endif
 		int pos = random16(LedCount);
-		SetPixel(pos, ColorFromPalette(colorPalette, fxStep + random8(64)), MIRROR0, false); //true);
+		SetPixel(pos, ColorFromPalette(colorPalette, fxStep + random8(64)), NOMIRROR, false); //true);
 		NextFxStep();
 	}
 

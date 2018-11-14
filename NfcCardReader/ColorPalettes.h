@@ -55,19 +55,19 @@ void DumpPalette(std::vector<CRGB> pal)
 
 #pragma region "NFC Card"
 const std::vector<String> NfcCardKeys = {
-    "Idle", "Card", "Error"};
+    "NfcIdle", "NfcSuccess", "NfcError"};
 
 const std::map<String, String> NfcCardNames =
     {
-        {"Idle", "Idle"},
-        {"Card", "Card read"},
-        {"Error", "Card error"}};
+        {"NfcIdle", "Idle"},
+        {"NfcSuccess", "Card read"},
+        {"NfcError", "Card error"}};
 
 const std::map<String, std::vector<CRGB>> NfcCardColors =
     {
-        {"Idle", {0x0000FF, 0x000040, 0x0000FF, 0x000040, 0x0000FF, 0x000000, 0x000000, 0x000000}},
-        {"Card", {0x00FF00, 0x004000, 0x00FF00, 0x000040, 0x00FF00, 0x000000, 0x000000, 0x000000}},
-        {"Error", {0xFF0000, 0x400000, 0xFF0000, 0x400000, 0xFF0000, 0x000000, 0x000000, 0x000000}},
+        {"NfcIdle", {0x0000FF, 0x000010, 0x0000FF, 0x000010, 0x0000FF, 0x000000, 0x000000, 0x000000}},
+        {"NfcSuccess", {0x00FF00, 0x80FF00, 0x00FF00, 0x00FF00, 0x80FF00, 0x00FF00, 0x000000, 0x000000}},
+        {"NfcError", {0xFF0000, 0x000000, 0xFF0000, 0x000000, 0xFF0000, 0x000000, 0xFF0000, 0x000000, 0xFF0000, 0x000000, 0xFF0000, 0x000000, 0xFF0000, 0x000000, 0xFF0000, 0x000000}},
 };
 #pragma endregion
 
@@ -350,39 +350,39 @@ void InitColorPalettes()
     // AddColorPalette("Farbmix Triade", (std::vector<CRGB>)NULL /*TriadPaletteFromHue(hue, 255)*/, false);
     // AddColorPalette("Farbmix Triade+Komplement", (std::vector<CRGB>)NULL /*TriadPaletteFromHue(hue, 255, true)*/, false);
 
-    // World Cup 2018
+    // NFC Card States
     for (int nfcNr = 0; nfcNr < NfcCardKeys.size(); nfcNr++)
     {
         String nfcKey = NfcCardKeys[nfcNr];
-        AddColorPalette("NFC " + nfcKey, CreateNfcColorPalette(nfcKey), false);
+        AddColorPalette(nfcKey, CreateNfcColorPalette(nfcKey), false);
     }
 
     // Add some more pretty palettes :-)
     AddColorPalette("Regenbogen" /*"Rainbow"*/, {CRGB(0xFF0000), CRGB(0xD52A00), CRGB(0xAB5500), CRGB(0xAB7F00), CRGB(0xABAB00), CRGB(0x56D500), CRGB(0x00FF00), CRGB(0x00D52A), CRGB(0x00AB55), CRGB(0x0056AA), CRGB(0x0000FF), CRGB(0x2A00D5), CRGB(0x5500AB), CRGB(0x7F0081), CRGB(0xAB0055), CRGB(0xD5002B)});
-    AddColorPalette("Party" /*"Party"*/, {CRGB(0x5500AB), CRGB(0x84007C), CRGB(0xB5004B), CRGB(0xE5001B), CRGB(0xE81700), CRGB(0xB84700), CRGB(0xAB7700), CRGB(0xABAB00), CRGB(0xAB5500), CRGB(0xDD2200), CRGB(0xF2000E), CRGB(0xC2003E), CRGB(0x8F0071), CRGB(0x5F00A1), CRGB(0x2F00D0), CRGB(0x0007F9)});
-    AddColorPalette("Pop" /*"Pop"*/, {CRGB(0xAAFF00), CRGB(0xFFAA00), CRGB(0xFF00AA), CRGB(0xAA00FF), CRGB(0x00AAFF)});
+    // AddColorPalette("Party" /*"Party"*/, {CRGB(0x5500AB), CRGB(0x84007C), CRGB(0xB5004B), CRGB(0xE5001B), CRGB(0xE81700), CRGB(0xB84700), CRGB(0xAB7700), CRGB(0xABAB00), CRGB(0xAB5500), CRGB(0xDD2200), CRGB(0xF2000E), CRGB(0xC2003E), CRGB(0x8F0071), CRGB(0x5F00A1), CRGB(0x2F00D0), CRGB(0x0007F9)});
+    // AddColorPalette("Pop" /*"Pop"*/, {CRGB(0xAAFF00), CRGB(0xFFAA00), CRGB(0xFF00AA), CRGB(0xAA00FF), CRGB(0x00AAFF)});
 
-    // Colourlovers Palettes
-    AddColorPalette("Blues" /*"Blues"*/, {CRGB(0x4AD8DB), CRGB(0xD30081), CRGB(0x780072), CRGB(0x1A46F4), CRGB(0x02155B)});
-    AddColorPalette("Einhorn" /*"Unicorn1"*/, {CRGB(0xEEF6D0), CRGB(0xBF7DB7), CRGB(0x40F9E8), CRGB(0x49C1BB), CRGB(0x85038C)}); // Exclude?
-    AddColorPalette("Tag und Nacht 1" /*"DayAndNight"*/, {CRGB(0x00C17D), CRGB(0x00E999), CRGB(0xEF9000), CRGB(0xEDEA01), CRGB(0xFFF439)});
-    AddColorPalette("Tag und Nacht 2" /*"NightAndDay1"*/, {CRGB(0x029DAF), CRGB(0xE5D599), CRGB(0xFFC219), CRGB(0xF07C19), CRGB(0xE32551)});
-    AddColorPalette("Frostig" /*"Frosty"*/, {CRGB(0x645067), CRGB(0x0095BD), CRGB(0x3CCB91), CRGB(0xA7FC98), CRGB(0xE1FFD9)});
-    AddColorPalette("Warm" /*"Warm"*/, {/*CRGB(0xFCDEBB),*/ CRGB(0xFAC589), CRGB(0xD94709), CRGB(0xA80022), CRGB(0x8C001C)});
-    AddColorPalette("Pastell 1" /*"Pastel1"*/, {CRGB(0x3FB8AF), CRGB(0x7FC7AF), CRGB(0xDAD8A7), CRGB(0xFF9E9D), CRGB(0xFF3D7F)});  // Exclude?
-    AddColorPalette("Pastell 2" /*"Pinkish2"*/, {CRGB(0xEB2A73), CRGB(0xFF619A), CRGB(0xFF94BB), CRGB(0xFFC7DB), CRGB(0xFFE8F0)}); // Exclude?
-    AddColorPalette("Girlie" /*"Girlish1"*/, {CRGB(0x009999), CRGB(0x8E0039), CRGB(0xDB0058), CRGB(0xFF7400), CRGB(0xFFC700)});
-    AddColorPalette("Natur 1" /*"Nature2"*/, {CRGB(0xBF2A23), CRGB(0xA6AD3C), CRGB(0xF0CE4E), CRGB(0xCF872E), CRGB(0x8A211D)});
-    AddColorPalette("Natur 2" /*"Nature3"*/, {CRGB(0xFCDEBB), CRGB(0xFAC589), CRGB(0xD94709), CRGB(0xA80022), CRGB(0x8C001C)});
-    AddColorPalette("Ozean" /*"Ocean2"*/, {CRGB(0xCFF09E), CRGB(0xA8DBA8), CRGB(0x79BD9A), CRGB(0x3B8686), CRGB(0x0B486B)}); // Exclude?
+    // // Colourlovers Palettes
+    // AddColorPalette("Blues" /*"Blues"*/, {CRGB(0x4AD8DB), CRGB(0xD30081), CRGB(0x780072), CRGB(0x1A46F4), CRGB(0x02155B)});
+    // AddColorPalette("Einhorn" /*"Unicorn1"*/, {CRGB(0xEEF6D0), CRGB(0xBF7DB7), CRGB(0x40F9E8), CRGB(0x49C1BB), CRGB(0x85038C)}); // Exclude?
+    // AddColorPalette("Tag und Nacht 1" /*"DayAndNight"*/, {CRGB(0x00C17D), CRGB(0x00E999), CRGB(0xEF9000), CRGB(0xEDEA01), CRGB(0xFFF439)});
+    // AddColorPalette("Tag und Nacht 2" /*"NightAndDay1"*/, {CRGB(0x029DAF), CRGB(0xE5D599), CRGB(0xFFC219), CRGB(0xF07C19), CRGB(0xE32551)});
+    // AddColorPalette("Frostig" /*"Frosty"*/, {CRGB(0x645067), CRGB(0x0095BD), CRGB(0x3CCB91), CRGB(0xA7FC98), CRGB(0xE1FFD9)});
+    // AddColorPalette("Warm" /*"Warm"*/, {/*CRGB(0xFCDEBB),*/ CRGB(0xFAC589), CRGB(0xD94709), CRGB(0xA80022), CRGB(0x8C001C)});
+    // AddColorPalette("Pastell 1" /*"Pastel1"*/, {CRGB(0x3FB8AF), CRGB(0x7FC7AF), CRGB(0xDAD8A7), CRGB(0xFF9E9D), CRGB(0xFF3D7F)});  // Exclude?
+    // AddColorPalette("Pastell 2" /*"Pinkish2"*/, {CRGB(0xEB2A73), CRGB(0xFF619A), CRGB(0xFF94BB), CRGB(0xFFC7DB), CRGB(0xFFE8F0)}); // Exclude?
+    // AddColorPalette("Girlie" /*"Girlish1"*/, {CRGB(0x009999), CRGB(0x8E0039), CRGB(0xDB0058), CRGB(0xFF7400), CRGB(0xFFC700)});
+    // AddColorPalette("Natur 1" /*"Nature2"*/, {CRGB(0xBF2A23), CRGB(0xA6AD3C), CRGB(0xF0CE4E), CRGB(0xCF872E), CRGB(0x8A211D)});
+    // AddColorPalette("Natur 2" /*"Nature3"*/, {CRGB(0xFCDEBB), CRGB(0xFAC589), CRGB(0xD94709), CRGB(0xA80022), CRGB(0x8C001C)});
+    // AddColorPalette("Ozean" /*"Ocean2"*/, {CRGB(0xCFF09E), CRGB(0xA8DBA8), CRGB(0x79BD9A), CRGB(0x3B8686), CRGB(0x0B486B)}); // Exclude?
 
-    // Christmas
-    AddColorPalette("Weihnachten 1" /*"Christmas1"*/, {CRGB(0x941F1F), CRGB(0xCE6B5D), CRGB(0xFFEFB9), CRGB(0x7B9971), CRGB(0x34502B), CRGB(0x7A7E5F)}); // Exclude?
-    AddColorPalette("Weihnachten 2" /*"Christmas2"*/, {CRGB(0x9E3333), CRGB(0xAB6060), CRGB(0xD4D1A5), CRGB(0x7BBD82), CRGB(0x3D9949), CRGB(0x7A7E5F)}); // Exclude?
-    AddColorPalette("Weihnachten 3" /*"Christmas4"*/, {/*CRGB::Black,*/ CRGB::DarkViolet, CRGB::DarkRed, /*CRGB::Black,*/ CRGB::DarkOrange, CRGB::DarkGreen});
-    AddColorPalette("Weihnachten 4" /*"Christmas8"*/, {/*CRGB::Black,*/ CRGB::DarkRed, CRGB::DarkOrange, CRGB::DarkRed, CRGB::DarkGreen});
+    // // Christmas
+    // AddColorPalette("Weihnachten 1" /*"Christmas1"*/, {CRGB(0x941F1F), CRGB(0xCE6B5D), CRGB(0xFFEFB9), CRGB(0x7B9971), CRGB(0x34502B), CRGB(0x7A7E5F)}); // Exclude?
+    // AddColorPalette("Weihnachten 2" /*"Christmas2"*/, {CRGB(0x9E3333), CRGB(0xAB6060), CRGB(0xD4D1A5), CRGB(0x7BBD82), CRGB(0x3D9949), CRGB(0x7A7E5F)}); // Exclude?
+    // AddColorPalette("Weihnachten 3" /*"Christmas4"*/, {/*CRGB::Black,*/ CRGB::DarkViolet, CRGB::DarkRed, /*CRGB::Black,*/ CRGB::DarkOrange, CRGB::DarkGreen});
+    // AddColorPalette("Weihnachten 4" /*"Christmas8"*/, {/*CRGB::Black,*/ CRGB::DarkRed, CRGB::DarkOrange, CRGB::DarkRed, CRGB::DarkGreen});
 
-    // Fires
-    AddColorPalette("Kaminfeuer" /*"CozyFire3"*/, {CRGB::DarkRed, CRGB::Red, CRGB::Orange, CRGB::Yellow, CRGB::DarkOrange});
+    // // Fires
+    // AddColorPalette("Kaminfeuer" /*"CozyFire3"*/, {CRGB::DarkRed, CRGB::Red, CRGB::Orange, CRGB::Yellow, CRGB::DarkOrange});
 }
 #pragma endregion

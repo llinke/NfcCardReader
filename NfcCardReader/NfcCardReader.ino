@@ -40,37 +40,21 @@
 // *** Variable and Constants Declarations
 // **************************************************
 #pragma region Variables and Constants
-// [I2C]
-const int I2C_SCL_PIN = D1;
-const int I2C_SCA_PIN = D2;
-const int I2C_BUS_SPEED = 100000; // 100kHz for PCF8574
-const int I2C_CLK_STRETCH_LIMIT = 1600;
-
-// [NFC]
-const int I2C_NFC_IRQ_PIN = D5;
-const bool UseNfcInterrupt = false;
-const int TagPresentTimeout = 0; //100;
-const int ScanInterval = 1000;
-const int NfcIrqStateIfCard = 0;
-
-volatile unsigned long nextScan = millis();
-volatile bool isNfcCardDetected = false;
-
-PN532_I2C pn532_i2c(Wire);
-NfcAdapter nfc = NfcAdapter(pn532_i2c);
-
 // [FastLED]
-const std::vector<int> groupSizes = {PIXEL_COUNT};
-volatile int activeGrpNr = 0;
-
-volatile uint8_t globalBrightness = 128;
-
 // Static size
 struct CRGB leds[PIXEL_COUNT];
 // Dynamic size:
 //struct CRGB *leds = NULL;
+
 bool ledsInitialized = false;
 bool ledsStarted = false;
+volatile uint8_t globalBrightness = 128;
+
+// [NeoGroup]
+const std::vector<int> groupSizes = {PIXEL_COUNT};
+const std::vector<int> groupOffsets = {0};
+volatile int activeGrpNr = 0;
+
 // 1: Wave, 2: Dynamic Wave, 3: Noise, 4: Confetti, 5: Fade, 6: Comet, 7: Orbit, 8: Fill
 const uint8_t fxNrWave = 1;
 const uint8_t fxNrDynamicWave = 2;
@@ -81,12 +65,12 @@ const uint8_t fxNrComet = 6;
 const uint8_t fxNrOrbit = 7;
 const uint8_t fxNrFill = 8;
 const int maxFxNr = 7;
-const int defaultFxNr = fxNrFade;
+const int defaultFxNr = fxNrWave; //fxNrFade;
 std::vector<int> currFxNr;
 int maxColNr = 1;           // will be dynamically assigned once palettes are generated
 const int defaultColNr = 1; // "NFC Idle"
 std::vector<int> currColNr;
-const int defaultFps = 50; //25;
+const int defaultFps = 75; //25;
 std::vector<int> currFps;
 const int defaultGlitter = 0; //32;
 std::vector<int> currGlitter;
@@ -95,6 +79,35 @@ uint8_t currentSat = 255;
 
 //std::vector<NeoGroup *> neoGroups;
 std::vector<NeoGroup> neoGroups;
+
+// [I2C]
+const int I2C_SCL_PIN = D1;
+const int I2C_SCA_PIN = D2;
+const int I2C_BUS_SPEED = 100000; // 100kHz for PCF8574
+const int I2C_CLK_STRETCH_LIMIT = 1600;
+
+// [NFC]
+const int NfcTagPresentTimeout = 0; //100;
+// const int NfcScanInterval = 1000;
+
+volatile unsigned long nextScan = millis();
+volatile bool isNfcCardDetected = false;
+
+PN532_I2C pn532_i2c(Wire);
+NfcAdapter nfc = NfcAdapter(pn532_i2c);
+
+// [NFC State Machine]
+const uint8_t nfcStateUnchanged = -1;
+const uint8_t nfcStateIdle = 0;
+const uint8_t nfcStateSuccess = 1;
+const uint8_t nfcStateError = 2;
+const std::vector<uint8_t> nfcFxNr = {fxNrWave, fxNrWave, fxNrFade};
+const std::vector<String> nfcFxCol = {"NfcIdle", "NfcSuccess", "NfcError"};
+const std::vector<int> nfcFxFps = {75, 75, 100};
+const std::vector<int> nfcScanInterval = {1000, 8000, 8000};
+
+volatile uint8_t nfcCurrentState = nfcStateIdle;
+volatile uint8_t nfcNextState = nfcStateUnchanged;
 #pragma endregion
 // **************************************************
 
@@ -102,35 +115,6 @@ std::vector<NeoGroup> neoGroups;
 // *** Event Handlers
 // **************************************************
 #pragma region Event Handlers
-// [NFC Event Handlers]
-void onNfcCardDetected()
-{
-  int pinState = digitalRead(I2C_NFC_IRQ_PIN);
-
-  if (isNfcCardDetected)
-    return;
-
-  DEBUG_PRINT("NFC: IRQ changed to " + String(pinState) + "...");
-
-  isNfcCardDetected = pinState == NfcIrqStateIfCard;
-  if (!isNfcCardDetected)
-  {
-    DEBUG_PRINTLN("ignoring, no card detection.")
-    return;
-  }
-
-  if (millis() < nextScan)
-  {
-    DEBUG_PRINTLN("ignoring, not yet....")
-    return;
-  }
-
-  DEBUG_PRINTLN("requesting handling.")
-
-  //isNfcCardDetected = true;
-  nextScan = millis() + ScanInterval;
-  DEBUG_PRINTLN("NFC: next scan at " + String(nextScan) + ".");
-}
 #pragma endregion
 // **************************************************
 
@@ -166,6 +150,7 @@ int initStrip(bool doStart = false, bool playDemo = true)
     CRGBPalette16 colorPalette = NeoGroup::GenerateRGBPalette(ColorPalettes.find("Regenbogen")->second);
     for (int dot = 0; dot < 256; dot++)
     {
+      /*
       // Comet effect :-)
       fadeToBlackBy(leds, PIXEL_COUNT, 8);
       int variant = (PIXEL_COUNT / 16);
@@ -176,15 +161,14 @@ int initStrip(bool doStart = false, bool playDemo = true)
       //DEBUG_PRINTLN(pos);
       int bright = random(64, 255);
 
-      /*
-			CRGB color = CHSV(random8(), 255, 255);
-			nblend(leds[pos], color, 128);
-			*/
       uint8_t colpos = dot + random8(16) - 8;
       nblend(leds[pos], ColorFromPalette(colorPalette, colpos, bright), 128);
+      */
 
+      int bright = dot < 32 ? dot * 8 : 255;
+      fill_solid(leds, PIXEL_COUNT, ColorFromPalette(colorPalette, dot, bright));
       FastLED.show();
-      delay(10);
+      delay(5);
       DEBUG_PRINT(".");
     }
     DEBUG_PRINTLN("DONE");
@@ -216,7 +200,7 @@ int initStrip(bool doStart = false, bool playDemo = true)
   for (int i = 0; i < groupSizes.size(); i++)
   {
     String groupName = "Group " + String(i + 1);
-    addGroup(groupName, nextGroupStart, groupSizes[i], 0);
+    addGroup(groupName, nextGroupStart, groupSizes[i], groupOffsets[i]);
     nextGroupStart += groupSizes[i];
   }
   activeGrpNr = 0;
@@ -311,7 +295,7 @@ int setGrpEffect(
     int amountglitter = -1,
     int fps = 0,
     direction direction = FORWARD,
-    mirror mirror = MIRROR0,
+    mirror mirror = NOMIRROR,
     wave wave = LINEAR,
     int speed = 1,
     double fpsFactor = 1.0)
@@ -380,7 +364,7 @@ void SetEffect(int grpNr, int fxNr,
   int fxGlitter = currGlitter.at(grpNr);
   int fxFps = currFps.at(grpNr);
   double fxFpsFactor = 1.0;
-  mirror fxMirror = MIRROR0;
+  mirror fxMirror = NOMIRROR;
   wave fxWave = wave::LINEAR;
   int fxSpeed = speed;
 
@@ -391,19 +375,19 @@ void SetEffect(int grpNr, int fxNr,
     fxPatternName = "Wave";
     fxPattern = pattern::WAVE;
     fxDirection = direction::REVERSE;
-    fxMirror = mirror::MIRROR1;
+    fxMirror = mirror::MIRRORODDEVEN;
     fxFpsFactor = 0.5; // half FPS looks better
     break;
   case fxNrDynamicWave:
     fxPatternName = "Dynamic Wave";
     fxPattern = pattern::DYNAMICWAVE;
-    fxMirror = mirror::MIRROR1; // mirror::MIRROR0;
+    fxMirror = mirror::MIRRORODDEVEN; // mirror::NOMIRROR;
     // fxFpsFactor = 0.5; // half FPS looks better
     break;
   case fxNrNoise:
     fxPatternName = "Noise";
     fxPattern = pattern::NOISE;
-    fxMirror = mirror::MIRROR1; // mirror::MIRROR0;
+    fxMirror = mirror::MIRRORODDEVEN; // mirror::NOMIRROR;
     // fxFps *= 2; // double FPS looks better
     fxFpsFactor = 2.0; // double FPS looks better
     break;
@@ -427,7 +411,7 @@ void SetEffect(int grpNr, int fxNr,
     // fxWave = wave::SINUS;
     // fxFps *= 3; //1.5; // faster FPS looks better
     // fxFpsFactor = 1.5; // faster FPS looks better
-    fxMirror = mirror::MIRROR1;
+    fxMirror = mirror::MIRRORODDEVEN;
     break;
   case fxNrOrbit:
     fxPatternName = "Orbit";
@@ -437,8 +421,8 @@ void SetEffect(int grpNr, int fxNr,
     // fxFps *= 1.5; // faster FPS looks better
     // fxFpsFactor = 1.5; // faster FPS looks better
     fxFpsFactor = 0.5; // half FPS looks better
-    fxMirror = mirror::MIRROR0;
-    // fxMirror = mirror::MIRROR1;
+    fxMirror = mirror::NOMIRROR;
+    // fxMirror = mirror::MIRRORODDEVEN;
     break;
   case fxNrFill:
     fxPatternName = "Fill";
@@ -446,13 +430,13 @@ void SetEffect(int grpNr, int fxNr,
     fxWave = wave::EASEINOUT;
     // fxFps *= 1.5; // faster FPS looks better
     fxFpsFactor = 1.5; // faster FPS looks better
-    // fxMirror = mirror::MIRROR0;
-    fxMirror = mirror::MIRROR1;
+    // fxMirror = mirror::NOMIRROR;
+    fxMirror = mirror::MIRRORODDEVEN;
     break;
   default:
     fxPatternName = "Static";
     fxPattern = pattern::STATIC;
-    fxMirror = mirror::MIRROR0;
+    fxMirror = mirror::NOMIRROR;
     break;
   }
 
@@ -502,6 +486,11 @@ void SetColors(int grpNr, int colNr)
   }
 
   String palKey = ColorNames[colNr - 1];
+  SetColors(grpNr, palKey);
+}
+
+void SetColors(int grpNr, String palKey)
+{
   DEBUG_PRINTLN("Col: Changing color palette to '" + palKey + "'.");
   if (ColorPalettes.find(palKey) != ColorPalettes.end())
   {
@@ -512,6 +501,10 @@ void SetColors(int grpNr, int colNr)
       colors = GeneratePaletteFromHue(palKey, currentHue, currentSat);
     }
     setGrpColors(grpNr, colors, true, true, CROSSFADE_PALETTES);
+  }
+  else
+  {
+    DEBUG_PRINTLN("Col: ERROR: Color palette '" + palKey + "' not found!");
   }
 }
 
@@ -665,13 +658,6 @@ void InitNfc()
 {
   DEBUG_PRINTLN("NFC: Starting NDEF Reader");
 
-  if (UseNfcInterrupt)
-  {
-    DEBUG_PRINTLN("NFC: preparing IRQ handler.");
-    pinMode(I2C_NFC_IRQ_PIN, INPUT);
-    attachInterrupt(I2C_NFC_IRQ_PIN, onNfcCardDetected, RISING);
-  }
-
   nfc.begin();
 }
 
@@ -679,38 +665,27 @@ void HandleNfcTag()
 {
   static int count = 0;
 
-  if (UseNfcInterrupt)
-  {
-    if (!isNfcCardDetected)
-    {
-      nfc.tagPresent(0); // Trigger IRQ...
-      return;
-    }
+  if (millis() < nextScan)
+    return;
 
-    count++;
-    DEBUG_PRINTLN("\nNFC: NFC card reported by IRQ (#" + String(count) + ")");
-  }
-  else
-  {
-    if (millis() < nextScan)
-      return;
+  count++;
+  DEBUG_PRINTLN("\nNFC: scanning NFC tag (#" + String(count) + ")");
 
-    nextScan = millis() + ScanInterval;
-    DEBUG_PRINTLN("NFC: scan enforced, next at " + String(nextScan) + ".");
-
-    count++;
-    DEBUG_PRINTLN("\nNFC: scanning NFC tag (#" + String(count) + ")");
-
-    isNfcCardDetected = nfc.tagPresent(TagPresentTimeout);
-  }
+  isNfcCardDetected = nfc.tagPresent(NfcTagPresentTimeout);
+  DEBUG_PRINTLN("NFC: NFC tag detected:" + String(isNfcCardDetected));
 
   if (!isNfcCardDetected)
   {
-    DEBUG_PRINTLN("NFC: tag not present.");
+    if (nfcCurrentState != nfcStateIdle)
+    {
+      nfcNextState = nfcStateIdle;
+    }
+    nextScan = millis() + nfcScanInterval[nfcNextState != nfcStateUnchanged ? nfcNextState : nfcCurrentState];
+    DEBUG_PRINTLN("NFC: next scan in " + String(nextScan - millis()) + "ms.");
     return;
   }
 
-  isNfcCardDetected = false; //!nfc.tagPresent(TagPresentTimeout);
+  isNfcCardDetected = false; //!nfc.tagPresent(NfcTagPresentTimeout);
 
   NfcTag tag = nfc.read();
   DEBUG_PRINTLN(tag.getTagType());
@@ -720,8 +695,15 @@ void HandleNfcTag()
   if (!tag.hasNdefMessage()) // every tag won't have a message
   {
     DEBUG_PRINTLN("NFC: no NDEF message on tag.");
+    nfcNextState = nfcStateError;
+    nextScan = millis() + nfcScanInterval[nfcNextState];
+    DEBUG_PRINTLN("NFC: next scan in " + String(nextScan - millis()) + "ms.");
     return;
   }
+
+  nfcNextState = nfcStateSuccess;
+  nextScan = millis() + nfcScanInterval[nfcNextState];
+  DEBUG_PRINTLN("NFC: next scan in " + String(nextScan - millis()) + "ms.");
 
   NdefMessage message = tag.getNdefMessage();
   DEBUG_PRINT("NFC: This NFC Tag contains an NDEF Message with ");
@@ -808,6 +790,26 @@ void loop(void)
 
   HandleNfcTag();
 
+  if (nfcNextState != nfcStateUnchanged)
+  {
+    bool nfcStateChanged = nfcCurrentState != nfcNextState;
+    nfcCurrentState = nfcNextState;
+    nfcNextState = nfcStateUnchanged;
+
+    if (nfcStateChanged)
+    {
+      SetColors(activeGrpNr,
+                nfcFxCol[nfcCurrentState]);
+      SetEffect(activeGrpNr,
+                nfcFxNr[nfcCurrentState],
+                true,                       // start FX
+                false,                      // NOT only once
+                direction::FORWARD,         // forward
+                -1,                         // no glitter
+                nfcFxFps[nfcCurrentState]); // different FPS
+    }
+  }
+
   if (ledsStarted)
   {
     bool ledsUpdated = false;
@@ -832,7 +834,6 @@ void loop(void)
   }
 
   // REQUIRED: allow processing of interrupts etc
-  //delay(ScanInterval);
   delay(0);
   //yield();
 }
