@@ -1,3 +1,6 @@
+#ifndef __NEOGROUP_CPP__
+#define __NEOGROUP_CPP__
+
 #include <Arduino.h>
 #include "SerialDebug.h"
 #include "FastLedInclude.h"
@@ -1046,3 +1049,5 @@ class NeoGroup
 	}
 #pragma endregion
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __COLORPALS_H__
+#define __COLORPALS_H__
+
 #include <Arduino.h>
 #include "SerialDebug.h"
 #include "FastLedInclude.h"
@@ -386,3 +389,5 @@ void InitColorPalettes()
     // AddColorPalette("Kaminfeuer" /*"CozyFire3"*/, {CRGB::DarkRed, CRGB::Red, CRGB::Orange, CRGB::Yellow, CRGB::DarkOrange});
 }
 #pragma endregion
+
+#endif
