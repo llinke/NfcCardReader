@@ -34,3 +34,6 @@
 
 # More
 build/**/*
+
+# Include CAD files
+!CAD/**/*
