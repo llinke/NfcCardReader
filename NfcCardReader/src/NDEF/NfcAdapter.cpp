@@ -33,7 +33,8 @@ void NfcAdapter::begin(boolean verbose)
         Serial.println((versiondata >> 8) & 0xFF, DEC);
     }
 
-    // shield->setPassiveActivationRetries(0x01);
+    // IMPORTANT to avoid tagPresent queries blocking loop()
+    shield->setPassiveActivationRetries(0x01);
 
     // configure board to read RFID tags
     shield->SAMConfig();

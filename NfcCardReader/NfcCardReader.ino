@@ -672,7 +672,7 @@ void HandleNfcTag()
   DEBUG_PRINTLN("\nNFC: scanning NFC tag (#" + String(count) + ")");
 
   isNfcCardDetected = nfc.tagPresent(NfcTagPresentTimeout);
-  DEBUG_PRINTLN("NFC: NFC tag detected:" + String(isNfcCardDetected));
+  DEBUG_PRINTLN("NFC: NFC tag detected: " + String(isNfcCardDetected));
 
   if (!isNfcCardDetected)
   {
