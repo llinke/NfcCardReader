@@ -505,7 +505,7 @@ class NeoGroup
 		}
 		else
 		{
-			ledNormalNr = pos + LedOffset;
+			ledNormalNr = CapLedPosition(pos + LedOffset, LedCount);
 		}
 
 #ifdef PIXEL_USE_OFFSET

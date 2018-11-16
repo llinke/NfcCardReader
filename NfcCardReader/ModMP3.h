@@ -43,7 +43,7 @@ volatile int sfxBusyReleasedDelay = 2 * 1000;
 volatile bool sfxWatchdogEnabled = false;
 volatile int sfxWatchdogCheckAt = 0;
 const int sfxWatchdogDelay = 1000;
-const uint8_t sfxVolume = 30;
+const uint8_t sfxVolume = 10; //20;
 #endif
 #pragma endregion
 // **************************************************
@@ -116,7 +116,7 @@ void CheckSfxWatchdog()
     // RequestNextSfx();
 }
 
-void PlayNextMp3()
+void PlayMp3(uint8_t folder, uint8_t track)
 {
     if (IsPlayingMP3())
     {
@@ -125,15 +125,8 @@ void PlayNextMp3()
     }
 
     DEBUG_PRINTLN("MP3: Randomly selecting next MP3 to play for mode...");
-    uint8_t nextFolder = sfxFolder;
-    uint8_t nextTrack = 1;
-    static int sfxFilesCount = 0;
-    if (sfxFilesCount == 0)
-    {
-        sfxFilesCount = dfPlayer.getFolderTrackCount(nextFolder);
-        DEBUG_PRINTLN("MP3: Number of files in folder " + String(nextFolder) + ": " + String(sfxFilesCount));
-    }
-    nextTrack = sfxFilesCount == 0 ? -1 : random(0, sfxFilesCount);
+    uint8_t nextFolder = folder;
+    uint8_t nextTrack = track;
 
     if (nextTrack >= 0)
     {
@@ -156,6 +149,28 @@ void PlayNextMp3()
 
     sfxWatchdogCheckAt = millis() + sfxWatchdogDelay;
     sfxWatchdogEnabled = true;
+}
+
+void PlayNextMp3()
+{
+    if (IsPlayingMP3())
+    {
+        DEBUG_PRINTLN("MP3: PlayNextMp3 BLOCKED, cannot play next track.");
+        return;
+    }
+
+    DEBUG_PRINTLN("MP3: Randomly selecting next MP3 to play for mode...");
+    uint8_t nextFolder = sfxFolder;
+    uint8_t nextTrack = 1;
+    static int sfxFilesCount = 0;
+    if (sfxFilesCount == 0)
+    {
+        sfxFilesCount = dfPlayer.getFolderTrackCount(nextFolder);
+        DEBUG_PRINTLN("MP3: Number of files in folder " + String(nextFolder) + ": " + String(sfxFilesCount));
+    }
+    nextTrack = sfxFilesCount == 0 ? -1 : random(0, sfxFilesCount);
+
+    PlayMp3(nextFolder, nextTrack);
 }
 
 void onDfPlayerBusyReleased()
