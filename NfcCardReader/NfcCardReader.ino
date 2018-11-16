@@ -32,6 +32,8 @@
 #include "ModI2C.h"
 #include "ModNfc.h"
 #include "ModMP3.h"
+
+#include "src/IFTTT/ESP8266IFTTT.h"
 #pragma endregion
 // **************************************************
 
@@ -39,6 +41,8 @@
 // *** Variable and Constants Declarations
 // **************************************************
 #pragma region Variables and Constants
+#define IFTTT_API_Key "bRrM0DhsRPa10MZi8yjK-V"
+#define IFTTT_Event_Name "nfc_card"
 #pragma endregion
 // **************************************************
 
@@ -106,6 +110,7 @@ void loop(void)
       {
         uint8_t userAudioTrack = 0;
         String userName = "";
+        bool userIsKnown = true;
         if (uid == "04 92 09 EA 5E 5C 84") // Colin
         {
           userAudioTrack = 1;
@@ -160,10 +165,17 @@ void loop(void)
         {
           userAudioTrack = 0;
           userName = ""; // Unknown UID
+          userIsKnown = false;
         }
 
-        DEBUG_PRINTLN("NFC: UID " + uid + ", playing MP3 #" + String(userAudioTrack));
+        DEBUG_PRINTLN("NFC CARD: UID " + uid + ", playing MP3 #" + String(userAudioTrack));
         PlayMp3(sfxFolder, userAudioTrack);
+
+        if (userIsKnown)
+        {
+          DEBUG_PRINTLN("NFC CARD: Sending IFTTT event for user: " + uid + ", name: " + userName);
+          IFTTT.trigger(IFTTT_Event_Name, IFTTT_API_Key, uid.c_str(), userName.c_str(), "HelloWorld!");
+        }
       }
     }
   }

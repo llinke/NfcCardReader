@@ -43,7 +43,7 @@ volatile int sfxBusyReleasedDelay = 2 * 1000;
 volatile bool sfxWatchdogEnabled = false;
 volatile int sfxWatchdogCheckAt = 0;
 const int sfxWatchdogDelay = 1000;
-const uint8_t sfxVolume = 10; //20;
+const uint8_t sfxVolume = 27;
 #endif
 #pragma endregion
 // **************************************************
