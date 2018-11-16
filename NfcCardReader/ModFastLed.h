@@ -44,7 +44,7 @@ volatile uint8_t globalBrightness = 128;
 
 // [NeoGroup]
 const std::vector<int> groupSizes = {PIXEL_COUNT};
-const std::vector<int> groupOffsets = {0};
+const std::vector<int> groupOffsets = {1};
 volatile int activeGrpNr = 0;
 
 // 1: Wave, 2: Dynamic Wave, 3: Noise, 4: Confetti, 5: Fade, 6: Comet, 7: Orbit, 8: Fill
