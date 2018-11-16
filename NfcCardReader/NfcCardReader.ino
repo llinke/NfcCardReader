@@ -6,8 +6,6 @@
 #pragma region Compiler Flags
 // --- DEBUG ----------------------------------------
 // #define DEBUG_LOOP
-// --- WiFi ----------------------------------------
-// #define OFFLINE_MODE
 // --- MP3 Player -----------------------------------
 #define MP3_PLAYER
 #ifdef MP3_PLAYER
@@ -30,6 +28,7 @@
 
 #include <Wire.h>
 #include "ModFastLed.h"
+#include "ModWifi.h"
 #include "ModI2C.h"
 #include "ModNfc.h"
 #include "ModMP3.h"
@@ -54,6 +53,8 @@ void setup(void)
   DEBUG_PRINTLN("BOOT/SETUP ------------------------------------------------");
 
   InitFastLED();
+
+  InitWifi();
 
   InitI2C();
 
@@ -101,7 +102,7 @@ void loop(void)
       {
         PlayMp3(sfxFolder, 0); // ERROR
       }
-      else
+      else if (nfcCurrentState == nfcStateSuccess)
       {
         uint8_t userAudioTrack = 0;
         String userName = "";
