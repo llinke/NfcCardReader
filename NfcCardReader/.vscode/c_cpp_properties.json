@@ -9,7 +9,8 @@
                 "C:\\Users\\LLinke75\\Documents\\Arduino\\libraries",
                 "C:\\Users\\a416353\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**",
                 "C:\\Users\\a416353\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.4.2\\**",
-                "C:\\Users\\a416353\\Documents\\Arduino\\libraries"
+                "C:\\Users\\a416353\\Documents\\Arduino\\libraries",
+                "C:\\Users\\a416353\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.6.1\\**"
             ],
             "forcedInclude": [],
             "browse": {
