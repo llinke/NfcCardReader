@@ -35,7 +35,8 @@
 #pragma region Variables and Constants
 #ifdef MP3_PLAYER
 // SFX to play on initialization
-const uint8_t sfxFolder = 1;
+const uint8_t sfxFolder2018 = 1;
+const uint8_t sfxFolder2019 = 2;
 volatile uint8_t sfxFilesCount = 0;
 
 volatile int sfxBusyReleasedAt = millis();
@@ -68,7 +69,7 @@ bool IsPlayingMP3()
 
 class DfPlayerNotify
 {
-  public:
+public:
     static void OnError(uint16_t errorCode)
     {
         DEBUG_PRINTLN("MP3: COM ERROR " + String(errorCode));
@@ -160,7 +161,7 @@ void PlayNextMp3()
     }
 
     DEBUG_PRINTLN("MP3: Randomly selecting next MP3 to play for mode...");
-    uint8_t nextFolder = sfxFolder;
+    uint8_t nextFolder = sfxFolder2018;
     uint8_t nextTrack = 1;
     static int sfxFilesCount = 0;
     if (sfxFilesCount == 0)

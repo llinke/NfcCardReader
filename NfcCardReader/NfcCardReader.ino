@@ -104,65 +104,141 @@ void loop(void)
       // PlayNextMp3();
       if (nfcCurrentState == nfcStateError)
       {
-        PlayMp3(sfxFolder, 0); // ERROR
+        PlayMp3(sfxFolder2018, 0); // ERROR
       }
       else if (nfcCurrentState == nfcStateSuccess)
       {
         uint8_t userAudioTrack = 0;
+        uint8_t sfxFolder = sfxFolder2018;
         String userName = "";
         bool userIsKnown = true;
+
+        /* --- 2018 ---------------------------------------- */
         if (uid == "04 92 09 EA 5E 5C 84") // Colin
         {
+          sfxFolder = sfxFolder2018;
           userAudioTrack = 1;
           userName = "Colin";
         }
         else if (uid == "04 8E 08 EA 5E 5C 84") // Jana
         {
+          sfxFolder = sfxFolder2018;
           userAudioTrack = 2;
           userName = "Jana";
         }
         else if (uid == "04 9F 04 EA 5E 5C 84") // Jonah
         {
+          sfxFolder = sfxFolder2018;
           userAudioTrack = 3;
           userName = "Jonah";
         }
         else if (uid == "04 87 07 EA 5E 5C 84") // Kjell
         {
+          sfxFolder = sfxFolder2018;
           userAudioTrack = 4;
           userName = "Kjell";
         }
         else if (uid == "04 8C 05 EA 5E 5C 84") // Noah
         {
+          sfxFolder = sfxFolder2018;
           userAudioTrack = 5;
           userName = "Noah";
         }
         else if (uid == "04 A6 04 EA 5E 5C 84") // Oskar
         {
+          sfxFolder = sfxFolder2018;
           userAudioTrack = 6;
           userName = "Oskar";
         }
         else if (uid == "04 94 04 EA 5E 5C 84") // Paul
         {
+          sfxFolder = sfxFolder2018;
           userAudioTrack = 7;
           userName = "Paul";
         }
         else if (uid == "04 96 07 EA 5E 5C 84") // Per
         {
+          sfxFolder = sfxFolder2018;
           userAudioTrack = 8;
           userName = "Per";
         }
         else if (uid == "04 90 03 EA 5E 5C 84") // Rafael
         {
+          sfxFolder = sfxFolder2018;
           userAudioTrack = 9;
           userName = "Rafael";
         }
         else if (uid == "04 08 FE EA 5E 5C 81") // Test Handle
         {
+          sfxFolder = sfxFolder2018;
           userAudioTrack = 8;
           userName = "Neo"; // Play for Per
         }
+        /* --- 2019 ---------------------------------------- */
+        else if (uid == "04 7C 9D C2 A8 64 81") // Colin
+        {
+          sfxFolder = sfxFolder2019;
+          userAudioTrack = 1;
+          userName = "Colin";
+        }
+        else if (uid == "04 74 9D C2 A8 64 81") // Jana
+        {
+          sfxFolder = sfxFolder2019;
+          userAudioTrack = 2;
+          userName = "Jana";
+        }
+        else if (uid == "04 6C 9D C2 A8 64 81") // Jonah
+        {
+          sfxFolder = sfxFolder2019;
+          userAudioTrack = 3;
+          userName = "Jonah";
+        }
+        else if (uid == "04 64 9D C2 A8 64 81") // Kjell
+        {
+          sfxFolder = sfxFolder2019;
+          userAudioTrack = 4;
+          userName = "Kjell";
+        }
+        else if (uid == "04 5C 9D C2 A8 64 81") // Noah
+        {
+          sfxFolder = sfxFolder2019;
+          userAudioTrack = 5;
+          userName = "Noah";
+        }
+        else if (uid == "04 54 9D C2 A8 64 81") // Oskar
+        {
+          sfxFolder = sfxFolder2019;
+          userAudioTrack = 6;
+          userName = "Oskar";
+        }
+        else if (uid == "04 4C 9D C2 A8 64 81") // Paul
+        {
+          sfxFolder = sfxFolder2019;
+          userAudioTrack = 7;
+          userName = "Paul";
+        }
+        else if (uid == "04 44 9D C2 A8 64 81") // Per
+        {
+          sfxFolder = sfxFolder2019;
+          userAudioTrack = 8;
+          userName = "Per";
+        }
+        else if (uid == "04 3C 9D C2 A8 64 81") // Nils
+        {
+          sfxFolder = sfxFolder2019;
+          userAudioTrack = 9;
+          userName = "Rafael";
+        }
+        else if (uid == "04 89 98 C2 A8 64 80") // Test Handle
+        {
+          sfxFolder = sfxFolder2019;
+          userAudioTrack = 8;
+          userName = "Neo"; // Play for Per
+        }
+        /* --- ERROR ---------------------------------------- */
         else
         {
+          sfxFolder = sfxFolder2018;
           userAudioTrack = 0;
           userName = ""; // Unknown UID
           userIsKnown = false;
