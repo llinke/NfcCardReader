@@ -1,1 +1,1 @@
-"C:\Users\a416353\AppData\Local\Arduino15\packages\esp8266\tools\esptool\0.4.13\esptool.exe" -vv -cd nodemcu -cb 921600 -cp COM8 -ca 0x00000 -cf "d:\Work\Visual Studio Projects\Arduino\NfcCardReader\build\NfcCardReader.ino.bin"
+"C:\Users\a416353\AppData\Local\Arduino15\packages\esp8266\tools\esptool\0.4.13\esptool.exe" -vv -cd nodemcu -cb 921600 -cp COM8 -ca 0x00000 -cf "c:\Data\Work\Visual Studio Projects\Arduino\NfcCardReader\build\NfcCardReader.ino.bin"
