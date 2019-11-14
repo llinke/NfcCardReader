@@ -1,0 +1,262 @@
+** TagInfo scan (version 4.24.4) 2018-11-16 01:41:43 **
+Report Type: External
+
+-- IC INFO ------------------------------
+
+# IC manufacturer:
+NXP Semiconductors
+
+# IC type:
+NTAG215
+
+# NFC Forum NDEF-compliant tag:
+Type 2 Tag
+
+-- NDEF ------------------------------
+
+# NFC data set information:
+NDEF message containing 2 records
+Current message size: 90 bytes
+Maximum message size: 492 bytes
+NFC data set access: Read & Write
+Can be made Read-Only
+
+# Record #1: Smart Poster record:
+Type Name Format: NFC Forum well-known type
+Short Record
+type: "Sp"
+	# URI record
+	type: "U"
+	* protocol field: http://www.
+	* URI field: bit.ly/phl181116nt
+	# Text record
+	type: "T"
+	* encoding: UTF-8
+	* lang: "de"
+	* text: "Mission Debriefing"
+Payload length: 48 bytes
+Payload data:
+
+[00] 91 01 13 55 01 62 69 74 2E 6C 79 2F 70 68 6C 31 |...U.bit.ly/phl1|
+[10] 38 31 31 31 36 6E 74 51 01 15 54 02 64 65 4D 69 |81116ntQ..T.deMi|
+[20] 73 73 69 6F 6E 20 44 65 62 72 69 65 66 69 6E 67 |ssion Debriefing|
+
+# Record #2: Text record:
+Type Name Format: NFC Forum well-known type
+Short Record
+type: "T"
+encoding: UTF-8
+lang: "de"
+text: "PER/FieldAgent/LVL43/2018NOV16"
+Payload length: 33 bytes
+Payload data:
+
+[00] 02 64 65 50 45 52 2F 46 69 65 6C 64 41 67 65 6E |.dePER/FieldAgen|
+[10] 74 2F 4C 56 4C 34 33 2F 32 30 31 38 4E 4F 56 31 |t/LVL43/2018NOV1|
+[20] 36                                              |6               |
+
+# NDEF message:
+[00] 91 02 30 53 70 91 01 13 55 01 62 69 74 2E 6C 79 |..0Sp...U.bit.ly|
+[10] 2F 70 68 6C 31 38 31 31 31 36 6E 74 51 01 15 54 |/phl181116ntQ..T|
+[20] 02 64 65 4D 69 73 73 69 6F 6E 20 44 65 62 72 69 |.deMission Debri|
+[30] 65 66 69 6E 67 51 01 21 54 02 64 65 50 45 52 2F |efingQ.!T.dePER/|
+[40] 46 69 65 6C 64 41 67 65 6E 74 2F 4C 56 4C 34 33 |FieldAgent/LVL43|
+[50] 2F 32 30 31 38 4E 4F 56 31 36                   |/2018NOV16      |
+
+# NDEF Capability Container (CC):
+Mapping version: 1.0
+Maximum NDEF data size: 496 bytes
+NDEF access: Read & Write
+ E1 10 3E 00                                     |..>.            |
+
+-- EXTRA ------------------------------
+
+# Memory size:
+504 bytes user memory
+* 126 pages, with 4 bytes per page
+
+# IC detailed information:
+Full product name: NT2H1511G0DUx
+Capacitance: 50 pF
+
+# Version information:
+Vendor ID: NXP
+Type: NTAG
+Subtype: 50 pF
+Major version: 1
+Minor version: V0
+Storage size: 504 bytes
+Protocol: ISO/IEC 14443-3
+
+# Configuration information:
+ASCII mirror disabled
+NFC counter: disabled
+No limit on wrong password attempts
+Strong load modulation enabled
+
+# Originality check:
+Signature verified with NXP public key
+
+-- FULL SCAN ------------------------------
+
+# Technologies supported:
+ISO/IEC 14443-3 (Type A) compatible
+ISO/IEC 14443-2 (Type A) compatible
+
+# Android technology information:
+Tag description:
+* TAG: Tech [android.nfc.tech.NfcA, android.nfc.tech.MifareUltralight, android.nfc.tech.Ndef]
+* Maximum transceive length: 253 bytes
+* Default maximum transceive time-out: 618 ms
+
+
+# Detailed protocol information:
+ID: 04:96:07:EA:5E:5C:84
+ATQA: 0x4400
+SAK: 0x00
+
+# Memory content:
+[00] *  04:96:07 1D (UID0-UID2, BCC0)
+[01] *  EA:5E:5C:84 (UID3-UID6)
+[02] .  6C 48 00 00 (BCC1, INT, LOCK0-LOCK1)
+[03] .  E1:10:3E:00 (OTP0-OTP3)
+[04] .  03 5A 91 02 |.Z..|
+[05] .  30 53 70 91 |0Sp.|
+[06] .  01 13 55 01 |..U.|
+[07] .  62 69 74 2E |bit.|
+[08] .  6C 79 2F 70 |ly/p|
+[09] .  68 6C 31 38 |hl18|
+[0A] .  31 31 31 36 |1116|
+[0B] .  6E 74 51 01 |ntQ.|
+[0C] .  15 54 02 64 |.T.d|
+[0D] .  65 4D 69 73 |eMis|
+[0E] .  73 69 6F 6E |sion|
+[0F] .  20 44 65 62 | Deb|
+[10] .  72 69 65 66 |rief|
+[11] .  69 6E 67 51 |ingQ|
+[12] .  01 21 54 02 |.!T.|
+[13] .  64 65 50 45 |dePE|
+[14] .  52 2F 46 69 |R/Fi|
+[15] .  65 6C 64 41 |eldA|
+[16] .  67 65 6E 74 |gent|
+[17] .  2F 4C 56 4C |/LVL|
+[18] .  34 33 2F 32 |43/2|
+[19] .  30 31 38 4E |018N|
+[1A] .  4F 56 31 36 |OV16|
+[1B] .  FE 00 00 00 |....|
+[1C] .  00 00 00 00 |....|
+[1D] .  00 00 00 00 |....|
+[1E] .  00 00 00 00 |....|
+[1F] .  00 00 00 00 |....|
+[20] .  00 00 00 00 |....|
+[21] .  00 00 00 00 |....|
+[22] .  00 00 00 00 |....|
+[23] .  00 00 00 00 |....|
+[24] .  00 00 00 00 |....|
+[25] .  00 00 00 00 |....|
+[26] .  00 00 00 00 |....|
+[27] .  00 00 00 00 |....|
+[28] .  00 00 00 00 |....|
+[29] .  00 00 00 00 |....|
+[2A] .  00 00 00 00 |....|
+[2B] .  00 00 00 00 |....|
+[2C] .  00 00 00 00 |....|
+[2D] .  00 00 00 00 |....|
+[2E] .  00 00 00 00 |....|
+[2F] .  00 00 00 00 |....|
+[30] .  00 00 00 00 |....|
+[31] .  00 00 00 00 |....|
+[32] .  00 00 00 00 |....|
+[33] .  00 00 00 00 |....|
+[34] .  00 00 00 00 |....|
+[35] .  00 00 00 00 |....|
+[36] .  00 00 00 00 |....|
+[37] .  00 00 00 00 |....|
+[38] .  00 00 00 00 |....|
+[39] .  00 00 00 00 |....|
+[3A] .  00 00 00 00 |....|
+[3B] .  00 00 00 00 |....|
+[3C] .  00 00 00 00 |....|
+[3D] .  00 00 00 00 |....|
+[3E] .  00 00 00 00 |....|
+[3F] .  00 00 00 00 |....|
+[40] .  00 00 00 00 |....|
+[41] .  00 00 00 00 |....|
+[42] .  00 00 00 00 |....|
+[43] .  00 00 00 00 |....|
+[44] .  00 00 00 00 |....|
+[45] .  00 00 00 00 |....|
+[46] .  00 00 00 00 |....|
+[47] .  00 00 00 00 |....|
+[48] .  00 00 00 00 |....|
+[49] .  00 00 00 00 |....|
+[4A] .  00 00 00 00 |....|
+[4B] .  00 00 00 00 |....|
+[4C] .  00 00 00 00 |....|
+[4D] .  00 00 00 00 |....|
+[4E] .  00 00 00 00 |....|
+[4F] .  00 00 00 00 |....|
+[50] .  00 00 00 00 |....|
+[51] .  00 00 00 00 |....|
+[52] .  00 00 00 00 |....|
+[53] .  00 00 00 00 |....|
+[54] .  00 00 00 00 |....|
+[55] .  00 00 00 00 |....|
+[56] .  00 00 00 00 |....|
+[57] .  00 00 00 00 |....|
+[58] .  00 00 00 00 |....|
+[59] .  00 00 00 00 |....|
+[5A] .  00 00 00 00 |....|
+[5B] .  00 00 00 00 |....|
+[5C] .  00 00 00 00 |....|
+[5D] .  00 00 00 00 |....|
+[5E] .  00 00 00 00 |....|
+[5F] .  00 00 00 00 |....|
+[60] .  00 00 00 00 |....|
+[61] .  00 00 00 00 |....|
+[62] .  00 00 00 00 |....|
+[63] .  00 00 00 00 |....|
+[64] .  00 00 00 00 |....|
+[65] .  00 00 00 00 |....|
+[66] .  00 00 00 00 |....|
+[67] .  00 00 00 00 |....|
+[68] .  00 00 00 00 |....|
+[69] .  00 00 00 00 |....|
+[6A] .  00 00 00 00 |....|
+[6B] .  00 00 00 00 |....|
+[6C] .  00 00 00 00 |....|
+[6D] .  00 00 00 00 |....|
+[6E] .  00 00 00 00 |....|
+[6F] .  00 00 00 00 |....|
+[70] .  00 00 00 00 |....|
+[71] .  00 00 00 00 |....|
+[72] .  00 00 00 00 |....|
+[73] .  00 00 00 00 |....|
+[74] .  00 00 00 00 |....|
+[75] .  00 00 00 00 |....|
+[76] .  00 00 00 00 |....|
+[77] .  00 00 00 00 |....|
+[78] .  00 00 00 00 |....|
+[79] .  00 00 00 00 |....|
+[7A] .  00 00 00 00 |....|
+[7B] .  00 00 00 00 |....|
+[7C] .  00 00 00 00 |....|
+[7D] .  00 00 00 00 |....|
+[7E] .  00 00 00 00 |....|
+[7F] .  00 00 00 00 |....|
+[80] .  00 00 00 00 |....|
+[81] .  00 00 00 00 |....|
+[82] .  00 00 00 BD (LOCK2-LOCK4, CHK)
+[83] .  04 00 00 FF (CFG, MIRROR, AUTH0)
+[84] .  00 05 -- -- (ACCESS)
+[85] +P FF FF FF FF (PWD0-PWD3)
+[86] +P 00 00 -- -- (PACK0-PACK1)
+
+  *:locked & blocked, x:locked,
+  +:blocked, .:un(b)locked, ?:unknown
+  r:readable (write-protected),
+  p:password protected, -:write-only
+  P:password protected write-only
+
+--------------------------------------
+

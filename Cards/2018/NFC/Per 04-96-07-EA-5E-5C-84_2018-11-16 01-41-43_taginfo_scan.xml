@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scan>
+	<version>4.24.4</version>
+	<date>2018-11-16 01:41:43</date>
+	<title>NXP Semiconductors NTAG215 tag as Type 2 Tag</title>
+	<uid nxp="true">04:96:07:EA:5E:5C:84</uid>
+	<hasndef>true</hasndef>
+	<ndef>910230537091011355016269742E6C792F70686C3138313131366E74510115540264654D697373696F6E2044656272696566696E67510121540264655045522F4669656C644167656E742F4C564C34332F323031384E4F563136</ndef>
+	<section>
+		<subsection title="IC manufacturer">
+			<block type="text">
+	<content>NXP Semiconductors</content>
+</block>
+		</subsection>
+		<subsection title="IC type">
+			<block type="text">
+	<content>NTAG215</content>
+</block>
+		</subsection>
+		<subsection title="NFC Forum NDEF-compliant tag">
+			<block type="text">
+	<content>Type 2 Tag</content>
+</block>
+		</subsection>
+	</section>
+	<section>
+		<subsection title="NFC data set information">
+			<block type="text">
+	<content>NDEF message containing 2 records
+Current message size: 90 bytes
+Maximum message size: 492 bytes
+NFC data set access: Read &amp; Write
+Can be made Read-Only</content>
+</block>
+		</subsection>
+		<subsection title="Record #1: Smart Poster record">
+			<block type="text">
+	<content><size size="12">Type Name Format: NFC Forum well-known type<hexoutput> (1)</hexoutput>
+Short Record</size></content>
+</block><block type="text">
+	<content><mono>type: "Sp"
+</mono><b><size size="14">	■ URI record</size></b>
+<mono>	type: "U"
+</mono>	‣ protocol field: <url link="http://www.bit.ly/phl181116nt">http://www.</url><hexoutput> (0x01)</hexoutput>
+	‣ URI field: <url link="http://www.bit.ly/phl181116nt">bit.ly/phl181116nt</url>
+<b><size size="14">	■ Text record</size></b>
+<mono>	type: "T"
+</mono>	‣ encoding: UTF-8
+	‣ lang: "de"
+	‣ text: "Mission Debriefing"</content>
+</block>
+<block type="text">
+	<content>Payload length: 48 bytes</content>
+</block>
+<block type="text">
+	<content>Payload data:
+</content>
+</block>
+<block type="File">
+	<address>0</address>
+	<data>91 01 13 55 01 62 69 74 2E 6C 79 2F 70 68 6C 31</data>
+</block>
+<block type="File">
+	<address>16</address>
+	<data>38 31 31 31 36 6E 74 51 01 15 54 02 64 65 4D 69</data>
+</block>
+<block type="File">
+	<address>32</address>
+	<data>73 73 69 6F 6E 20 44 65 62 72 69 65 66 69 6E 67</data>
+</block>
+		</subsection>
+		<subsection title="Record #2: Text record">
+			<block type="text">
+	<content><size size="12">Type Name Format: NFC Forum well-known type<hexoutput> (1)</hexoutput>
+Short Record</size></content>
+</block><block type="text">
+	<content><mono>type: "T"
+</mono>encoding: UTF-8
+lang: "de"
+text: "PER/FieldAgent/LVL43/2018NOV16"</content>
+</block>
+<block type="text">
+	<content>Payload length: 33 bytes</content>
+</block>
+<block type="text">
+	<content>Payload data:
+</content>
+</block>
+<block type="File">
+	<address>0</address>
+	<data>02 64 65 50 45 52 2F 46 69 65 6C 64 41 67 65 6E</data>
+</block>
+<block type="File">
+	<address>16</address>
+	<data>74 2F 4C 56 4C 34 33 2F 32 30 31 38 4E 4F 56 31</data>
+</block>
+<block type="File">
+	<address>32</address>
+	<data>36</data>
+</block>
+		</subsection>
+		<subsection title="NDEF message">
+			<block type="File">
+	<address>0</address>
+	<data>91 02 30 53 70 91 01 13 55 01 62 69 74 2E 6C 79</data>
+</block>
+<block type="File">
+	<address>16</address>
+	<data>2F 70 68 6C 31 38 31 31 31 36 6E 74 51 01 15 54</data>
+</block>
+<block type="File">
+	<address>32</address>
+	<data>02 64 65 4D 69 73 73 69 6F 6E 20 44 65 62 72 69</data>
+</block>
+<block type="File">
+	<address>48</address>
+	<data>65 66 69 6E 67 51 01 21 54 02 64 65 50 45 52 2F</data>
+</block>
+<block type="File">
+	<address>64</address>
+	<data>46 69 65 6C 64 41 67 65 6E 74 2F 4C 56 4C 34 33</data>
+</block>
+<block type="File">
+	<address>80</address>
+	<data>2F 32 30 31 38 4E 4F 56 31 36</data>
+</block>
+		</subsection>
+		<subsection title="NDEF Capability Container (CC)">
+			<block type="text">
+	<content>Mapping version: 1.0
+Maximum NDEF data size: 496 bytes<hexoutput> (0x3E)</hexoutput>
+NDEF access: Read &amp; Write<hexoutput> (0x00)</hexoutput></content>
+</block><block type="File">
+	<address>-1</address>
+	<data>E1 10 3E 00</data>
+</block>
+		</subsection>
+	</section>
+	<section>
+		<subsection title="Memory size">
+			<block type="text">
+	<content>504 bytes user memory
+‣ 126 pages, with 4 bytes per page</content>
+</block>
+		</subsection>
+		<subsection title="IC detailed information">
+			<block type="text">
+	<content>Full product name: NT2H1511G0DUx
+Capacitance: 50 pF</content>
+</block>
+		</subsection>
+		<subsection title="Version information">
+			<block type="text">
+	<content>Vendor ID: NXP<hexoutput> (0x04)</hexoutput>
+Type: NTAG<hexoutput> (0x04)</hexoutput>
+Subtype: 50 pF<hexoutput> (0x02)</hexoutput>
+Major version: 1<hexoutput> (0x01)</hexoutput>
+Minor version: V0<hexoutput> (0x00)</hexoutput>
+Storage size: 504 bytes<hexoutput> (0x11)</hexoutput>
+Protocol: ISO/IEC 14443-3<hexoutput> (0x03)</hexoutput></content>
+</block>
+		</subsection>
+		<subsection title="Configuration information">
+			<block type="text">
+	<content>ASCII mirror disabled
+NFC counter: disabled
+No limit on wrong password attempts
+Strong load modulation enabled</content>
+</block>
+		</subsection>
+		<subsection title="Originality check">
+			<block type="text">
+	<content>Signature verified with NXP public key<hexoutput>
+Public key:
+‣ 0x04494E1A386D3D3CFE3DC10E5DE68A499B1C202DB5B132393E89ED19FE5BE8BC61
+</hexoutput><hexoutput>ECDSA signature:
+‣ r: 0x20D0C16B8125F25D155143A13B01C4E9
+‣ s: 0xADC5964B5256E0124735617CEF2F2D58</hexoutput></content>
+</block>
+		</subsection>
+	</section>
+	<section>
+		<subsection title="Technologies supported">
+			<block type="text">
+	<content>ISO/IEC 14443-3 (Type A) compatible
+ISO/IEC 14443-2 (Type A) compatible</content>
+</block>
+		</subsection>
+		<subsection title="Android technology information">
+			<block type="text">
+	<content>Tag description:
+‣ TAG: Tech [android.nfc.tech.NfcA, android.nfc.tech.MifareUltralight, android.nfc.tech.Ndef]
+‣ Maximum transceive length: 253 bytes
+‣ Default maximum transceive time-out: 618 ms
+<hexoutput>MIFARE Classic support present in Android</hexoutput></content>
+</block>
+		</subsection>
+		<subsection title="Detailed protocol information">
+			<block type="text">
+	<content>ID: 04:96:07:EA:5E:5C:84
+ATQA: 0x4400
+SAK: 0x00</content>
+</block>
+		</subsection>
+		<subsection title="Memory content">
+			<block type="Ultralight">
+	<address>0</address>
+	<data access="* " comment="(UID0-UID2, BCC0)">04 96 07 1D</data>
+</block>
+<block type="Ultralight">
+	<address>1</address>
+	<data access="* " comment="(UID3-UID6)">EA 5E 5C 84</data>
+</block>
+<block type="Ultralight">
+	<address>2</address>
+	<data access=". " comment="(BCC1, INT, LOCK0-LOCK1)">6C 48 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>3</address>
+	<data access=". " comment="(OTP0-OTP3)">E1 10 3E 00</data>
+</block>
+<block type="Ultralight">
+	<address>4</address>
+	<data access=". ">03 5A 91 02</data>
+</block>
+<block type="Ultralight">
+	<address>5</address>
+	<data access=". ">30 53 70 91</data>
+</block>
+<block type="Ultralight">
+	<address>6</address>
+	<data access=". ">01 13 55 01</data>
+</block>
+<block type="Ultralight">
+	<address>7</address>
+	<data access=". ">62 69 74 2E</data>
+</block>
+<block type="Ultralight">
+	<address>8</address>
+	<data access=". ">6C 79 2F 70</data>
+</block>
+<block type="Ultralight">
+	<address>9</address>
+	<data access=". ">68 6C 31 38</data>
+</block>
+<block type="Ultralight">
+	<address>10</address>
+	<data access=". ">31 31 31 36</data>
+</block>
+<block type="Ultralight">
+	<address>11</address>
+	<data access=". ">6E 74 51 01</data>
+</block>
+<block type="Ultralight">
+	<address>12</address>
+	<data access=". ">15 54 02 64</data>
+</block>
+<block type="Ultralight">
+	<address>13</address>
+	<data access=". ">65 4D 69 73</data>
+</block>
+<block type="Ultralight">
+	<address>14</address>
+	<data access=". ">73 69 6F 6E</data>
+</block>
+<block type="Ultralight">
+	<address>15</address>
+	<data access=". ">20 44 65 62</data>
+</block>
+<block type="Ultralight">
+	<address>16</address>
+	<data access=". ">72 69 65 66</data>
+</block>
+<block type="Ultralight">
+	<address>17</address>
+	<data access=". ">69 6E 67 51</data>
+</block>
+<block type="Ultralight">
+	<address>18</address>
+	<data access=". ">01 21 54 02</data>
+</block>
+<block type="Ultralight">
+	<address>19</address>
+	<data access=". ">64 65 50 45</data>
+</block>
+<block type="Ultralight">
+	<address>20</address>
+	<data access=". ">52 2F 46 69</data>
+</block>
+<block type="Ultralight">
+	<address>21</address>
+	<data access=". ">65 6C 64 41</data>
+</block>
+<block type="Ultralight">
+	<address>22</address>
+	<data access=". ">67 65 6E 74</data>
+</block>
+<block type="Ultralight">
+	<address>23</address>
+	<data access=". ">2F 4C 56 4C</data>
+</block>
+<block type="Ultralight">
+	<address>24</address>
+	<data access=". ">34 33 2F 32</data>
+</block>
+<block type="Ultralight">
+	<address>25</address>
+	<data access=". ">30 31 38 4E</data>
+</block>
+<block type="Ultralight">
+	<address>26</address>
+	<data access=". ">4F 56 31 36</data>
+</block>
+<block type="Ultralight">
+	<address>27</address>
+	<data access=". ">FE 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>28</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>29</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>30</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>31</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>32</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>33</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>34</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>35</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>36</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>37</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>38</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>39</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>40</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>41</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>42</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>43</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>44</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>45</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>46</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>47</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>48</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>49</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>50</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>51</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>52</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>53</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>54</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>55</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>56</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>57</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>58</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>59</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>60</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>61</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>62</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>63</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>64</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>65</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>66</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>67</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>68</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>69</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>70</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>71</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>72</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>73</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>74</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>75</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>76</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>77</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>78</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>79</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>80</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>81</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>82</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>83</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>84</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>85</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>86</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>87</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>88</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>89</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>90</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>91</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>92</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>93</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>94</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>95</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>96</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>97</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>98</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>99</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>100</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>101</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>102</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>103</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>104</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>105</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>106</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>107</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>108</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>109</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>110</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>111</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>112</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>113</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>114</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>115</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>116</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>117</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>118</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>119</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>120</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>121</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>122</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>123</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>124</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>125</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>126</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>127</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>128</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>129</address>
+	<data access=". ">00 00 00 00</data>
+</block>
+<block type="Ultralight">
+	<address>130</address>
+	<data access=". " comment="(LOCK2-LOCK4, CHK)">00 00 00 BD</data>
+</block>
+<block type="Ultralight">
+	<address>131</address>
+	<data access=". " comment="(CFG, MIRROR, AUTH0)">04 00 00 FF</data>
+</block>
+<block type="Ultralight">
+	<address>132</address>
+	<data access=". " comment="(ACCESS)" length="2">00 05</data>
+</block>
+<block type="Ultralight">
+	<address>133</address>
+	<data access="+P" comment="(PWD0-PWD3)">FF FF FF FF</data>
+</block>
+<block type="Ultralight">
+	<address>134</address>
+	<data access="+P" comment="(PACK0-PACK1)" length="2">00 00</data>
+</block>
+<block type="text">
+	<content>
+  *:locked &amp; blocked, x:locked,
+  +:blocked, .:un(b)locked, ?:unknown
+  r:readable (write-protected),
+  p:password protected, -:write-only
+  P:password protected write-only</content>
+</block>
+		</subsection>
+	</section>
+</scan>

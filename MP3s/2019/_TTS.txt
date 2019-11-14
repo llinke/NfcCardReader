@@ -1,0 +1,12 @@
+Authentifizierung erfolgreich. Willkommen Agent Kjell. Ihre biometrischen Daten werden nun geprüft. Anschließend wird Ihnen ein Mitarbeiter des Headquarters Einlass gewähren.
+Authentifizierung erfolgreich. Willkommen Agent Kjell. Ihre biometrischen Daten werden nun geprüft. Nach erfolgreicher Prüfung wird Ihnen ein Mitarbeiter des Headquarters Einlass gewähren.
+
+Authentifizierung erfolgreich! Willkommen zurück, Agent Kjell.<break/>
+Agent Per erwartet Sie bereits.<break/>
+Das Headquarter wurde über ihre Ankunft informiert, Sie werden in Kürze hereingelassen.
+
+Authentifizierung fehlgeschlagen! Das Wachpersonal wurde in Alarmbereitschaft versetzt! Bitte versuchen Sie noch einmal Ihre Karte zu scannen.
+
+http://www.fromtexttospeech.com
+https://text2speech.us
+https://ttsmp3.com/
