@@ -42,6 +42,7 @@ bool InitWifi(bool useWifiCfgTimeout = true, bool forceReconnect = false)
     }
     else
     {
+        /*
         if (ledsInitialized)
         {
             FastLED.clear(true);
@@ -49,24 +50,26 @@ bool InitWifi(bool useWifiCfgTimeout = true, bool forceReconnect = false)
             FastLED.show();
         }
         delay(2500);
+        */
+        blinkLeds(CRGB::Blue, 1000, 500);
+
         //WiFiManager
         WiFiManager wifiManager;
         if (forceReconnect)
         {
             wifiManager.resetSettings();
         }
-        //wifiManager.setAPStaticIPConfig(IPAddress(10,0,1,1), IPAddress(10,0,1,1), IPAddress(255,255,255,0));
-        //fetches ssid and pass from eeprom and tries to connect
-        //if it does not connect it starts an access point with the specified name
-        //here  "AutoConnectAP" and goes into a blocking loop awaiting configuration
         DEBUG_PRINTLN("WiFi Manager trying to connect...");
         if (useWifiCfgTimeout)
         {
             DEBUG_PRINTLN("You have " + String(ConfigureAPTimeout) + " seconds for configuration if required.");
             wifiManager.setConfigPortalTimeout(ConfigureAPTimeout);
         }
+        //fetches ssid and pass from eeprom and tries to connect
+        //if it does not connect it starts an access point with the specified name
+        //and goes into a blocking loop awaiting configuration
         connected = wifiManager.autoConnect(wifiApName.c_str());
-        //or use this for auto generated name ESP + ChipID
+        //use this for auto generated name ESP + ChipID
         //wifiManager.autoConnect();
         //if you get here you have connected to the WiFi
     }
@@ -75,13 +78,15 @@ bool InitWifi(bool useWifiCfgTimeout = true, bool forceReconnect = false)
         connected
             ? "Wifi is connected for device '" + WiFi.hostname() + "' with IP " + WiFi.localIP().toString() + "...yay!!!"
             : "!!! WIFI NOT CONNECTED !!!");
+    /*
     if (ledsInitialized)
     {
         fill_solid(leds, PIXEL_COUNT, connected ? CRGB::Green : CRGB::Red);
         FastLED.show();
     }
-
     delay(2500);
+    */
+    blinkLeds(connected ? CRGB::Green : CRGB::Red, 1000, 500);
 
     return connected;
 }

@@ -190,23 +190,31 @@ void onDfPlayerBusyReleased()
 
 void InitMp3Player()
 {
+#if false
+    DEBUG_PRINTLN("MP3: Initializing MP3 busy pin...");
     pinMode(MP3_BUSY_PIN, INPUT_PULLUP);
+
+    DEBUG_PRINTLN("MP3: Attaching MP3 busy pin handler...");
     attachInterrupt(MP3_BUSY_PIN, onDfPlayerBusyReleased, RISING);
 
     delay(1000);
+#endif
 
     DEBUG_PRINTLN("MP3: Configuring SoftSerial...");
+    blinkLeds(CRGB::Blue, 100, 150);
     dfSoftSerial.begin(9600);
     dfSoftSerial.setTimeout(600);
 
     DEBUG_PRINTLN("MP3: Initializing...");
     dfPlayer.begin();
+
     DEBUG_PRINTLN("MP3: Resetting...");
     dfPlayer.reset();
 
     delay(1000);
 
     DEBUG_PRINTLN("MP3: Getting status...");
+    blinkLeds(CRGB::Blue, 100, 150);
     uint16_t status = dfPlayer.getStatus();
     DEBUG_PRINTLN("MP3: Status " + String(status));
 

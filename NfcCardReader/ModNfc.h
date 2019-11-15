@@ -37,13 +37,14 @@ const uint8_t nfcStateUnchanged = -1;
 const uint8_t nfcStateIdle = 0;
 const uint8_t nfcStateSuccess = 1;
 const uint8_t nfcStateError = 2;
-const std::vector<uint8_t> nfcFxNr = {fxNrWave, fxNrWave, fxNrFade};
+//const std::vector<uint8_t> nfcFxNr = {fxNrWave, fxNrFade, fxNrFade};
+const std::vector<uint8_t> nfcFxNr = {fxNrWave, fxNrOrbit, fxNrFade};
 const std::vector<String> nfcFxCol = {"NfcIdle", "NfcSuccess", "NfcError"};
-const std::vector<int> nfcFxFps = {75, 75, 100};
+const std::vector<int> nfcFxFps = {50, 75, 100};
 const std::vector<int> nfcScanInterval = {1000, 10000, 10000};
 
-volatile uint8_t nfcCurrentState = nfcStateIdle;
-volatile uint8_t nfcNextState = nfcStateUnchanged;
+volatile uint8_t nfcCurrentState = nfcStateUnchanged;
+volatile uint8_t nfcNextState = nfcStateIdle;
 #pragma endregion
 // **************************************************
 

@@ -359,11 +359,12 @@ void SetEffect(int grpNr, int fxNr,
     case fxNrComet:
         fxPatternName = "Comet";
         fxPattern = pattern::COMET;
-        fxWave = wave::EASEINOUT;
-        // fxWave = wave::SINUS;
+        // fxWave = wave::EASEINOUT;
+        fxWave = wave::SINUS;
         // fxFps *= 3; //1.5; // faster FPS looks better
         // fxFpsFactor = 1.5; // faster FPS looks better
         fxMirror = mirror::MIRRORODDEVEN;
+        //fxMirror = mirror::MIRRORSECOND;
         break;
     case fxNrOrbit:
         fxPatternName = "Orbit";
@@ -372,7 +373,7 @@ void SetEffect(int grpNr, int fxNr,
         fxWave = wave::SINUS;
         // fxFps *= 1.5; // faster FPS looks better
         // fxFpsFactor = 1.5; // faster FPS looks better
-        fxFpsFactor = 0.5; // half FPS looks better
+        // fxFpsFactor = 0.5; // half FPS looks better
         fxMirror = mirror::NOMIRROR;
         // fxMirror = mirror::MIRRORODDEVEN;
         break;
@@ -528,6 +529,21 @@ void InitFastLED()
     //activeGrpNr = 0;
 
     DEBUG_PRINTLN("FastLED: Active group #" + String(activeGrpNr));
+}
+
+void blinkLeds(CRGB color, int onTime = 200, int offTime = 300)
+{
+    if (ledsInitialized)
+    {
+        FastLED.clear(true);
+
+        fill_solid(leds, PIXEL_COUNT, color);
+        FastLED.show();
+        delay(onTime);
+
+        FastLED.clear(true);
+        delay(offTime);
+    }
 }
 
 #pragma endregion

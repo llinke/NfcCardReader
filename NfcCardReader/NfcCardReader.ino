@@ -57,16 +57,23 @@ void setup(void)
   DEBUG_PRINTLN("BOOT/SETUP ------------------------------------------------");
 
   InitFastLED();
+  blinkLeds(CRGB::Yellow);
 
   InitWifi();
+  blinkLeds(CRGB::Yellow);
 
   InitI2C();
+  blinkLeds(CRGB::Yellow);
 
   InitNfc();
+  blinkLeds(CRGB::Yellow);
 
 #ifdef MP3_PLAYER
   InitMp3Player();
+  blinkLeds(CRGB::Yellow);
 #endif
+
+  blinkLeds(CRGB::Green, 750, 750);
 }
 #pragma endregion
 // **************************************************
@@ -242,6 +249,7 @@ void loop(void)
           userAudioTrack = 0;
           userName = ""; // Unknown UID
           userIsKnown = false;
+          nfcNextState = nfcStateError;
         }
 
         DEBUG_PRINTLN("NFC CARD: UID " + uid + ", playing MP3 #" + String(userAudioTrack));
